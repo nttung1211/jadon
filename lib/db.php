@@ -56,6 +56,16 @@ function uploadFiles($files, $savePath, $readPath, $table) {
   return 1;
 }
 
+function prepareFileUrl($file, $savePath, $readPath) {
 
+    $index = strrpos($file['name'], '.');
+    $fileExtension = strtolower(substr($file['name'], $index + 1));
+    $filePureName = substr($file['name'], 0, $index);
+    $uniqueId = uniqid();
+    $saveUrl = $savePath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;
+    $readUrl = $readPath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;
+  
+  return ['saveUrl' => $saveUrl, 'readUrl' => $readUrl];
+}
 
 

@@ -24,57 +24,66 @@ class DB {
 
   function getData($query, $params = null) {
     
-    if ($stmt = $this->con->prepare($query))  {
-      if ($params) {
-        $typeString = '';
-        
-        foreach ($params as $p) {
-          $typeString = $typeString . 's';
-        }
+    if (!($stmt = $this->con->prepare($query)))  {
+      exit('Failed to prepare query:' . $this->con->error);
+    } 
 
-        $stmt->bind_param($typeString, ...$params);
+    if ($params) {
+      $typeString = '';
+      
+      foreach ($params as $p) {
+        $typeString = $typeString . 's';
       }
 
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if (mysqli_num_rows($result)) {
-        $rows = [];
-
-        while ($row = $result->fetch_assoc()) {
-          $rows[] = $row;
-        };
-
-        return $rows;
-      } else {
-        return 0;
-      }
-
-      $stmt->close();
-    } else {
-      exit('Failed to prepare query.');
+      if (!$stmt->bind_param($typeString, ...$params)) {
+        exit('Failed to bind params: ' . $stmt->error);
+      };
     }
+
+    if (!$stmt->execute()) {
+      exit('Failed to execute query.' . $stmt->error);
+    };
+    
+    $result = $stmt->get_result();
+
+    if (mysqli_num_rows($result)) {
+      $rows = [];
+
+      while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+      };
+
+      return $rows;
+    } else {
+      return 0;
+    }
+
+    $stmt->close();
   }
 
   function alterData($query, $params = null) {
     
-    if ($stmt = $this->con->prepare($query))  {
-      if ($params) {
-        $typeString = '';
-        
-        foreach ($params as $p) {
-          $typeString = $typeString . 's';
-        }
-
-        $stmt->bind_param($typeString, ...$params);
+    if (!($stmt = $this->con->prepare($query)))  {
+      exit('Failed to prepare query.' . $this->con->error);
+    }
+    
+    if ($params) {
+      $typeString = '';
+      
+      foreach ($params as $p) {
+        $typeString = $typeString . 's';
       }
 
-      $stmt->execute();
-
-      $stmt->close();
-    } else {
-      exit('Failed to prepare query.');
+      if (!$stmt->bind_param($typeString, ...$params)) {
+        exit('Failed to bind params.' . $stmt->error);
+      };
     }
+
+    if (!$stmt->execute()) {
+      exit('Failed to execute query.' . $stmt->error);
+    };
+
+    $stmt->close();
   }
 
   function getConnection() {

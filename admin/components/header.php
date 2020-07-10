@@ -7,4 +7,8 @@
 
   <link rel="stylesheet" href="../lib/css/all.min.css">
   <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <script src="../lib/js/jquery.slim.min.js" defer></script>
+  <script src="../lib/js/bootstrap.bundle.min.js" defer></script>
+
+  <link rel="stylesheet" href="css/global.css">
+  <script src="js/global.js" defer></script>

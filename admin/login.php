@@ -7,39 +7,46 @@ if (isset($_POST['submit'])) {
 
   $validation = new LoginValidator($_POST);
   $errors = $validation->validateForm();
-}
 
-// if (count($errors)) {
-
-// }
-
-$tung = [1];
-if ($tung) {
-  echo 'tung';
+  if (!count($errors)) {
+    $rows = $db->getData("SELECT * FROM managers WHERE username = ?", [$_POST['username']]);
+    if ($rows === 0) {
+      $errors['username'] = 'Username does not exist.';
+    } else {
+      $user = $rows[0];
+      if ($user['password'] !== $_POST['password']) {
+        $errors['password'] = 'Wrong password.';
+      } else {
+        $_SESSION['jadon_loggedIn'] = $user;
+        header('Location: index.php');
+        exit();
+      }
+    }
+  }
 }
 
 ?>
 
-<?php include './components/header.php';
-$tung = ['name' => 'tung']
-?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../lib/css/all.min.css">
+  <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
+  <script src="../lib/js/jquery.slim.min.js" defer></script>
+  <script src="../lib/js/bootstrap.bundle.min.js" defer></script>
+
+  <link rel="stylesheet" href="css/global.css">
   <title>Login</title>
 </head>
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 mx-auto mt-5">
-        <h2>Login</h2>
-        <?php if (isset($_POST['submit']) && !$errors) {
-          echo "
-            <div class='alert alert-success alert-dismissible fade show' role='alert'>
-              <strong>Registerd successfully!</strong>
-              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-              </button>
-            </div>
-          "; 
-        } ?>
+      <div class="col-lg-5 col-md-7 col-9 mx-auto mt-5">
+        <h2 class="my-4">Login</h2>
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
           <div class="form-group">
@@ -47,32 +54,30 @@ $tung = ['name' => 'tung']
             <input type="text" name="username" id="username" class="form-control" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
           </div>
 
-          <?php if (isset($errors['username'])) {
+          <?php 
+          if (isset($errors['username'])) {
             echo "
-              <div class='alert alert-danger alert-dismissible fade show text-capitalize' role='alert'>
+              <div class='alert alert-danger' role='alert'>
                 <strong>$errors[username]</strong>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
               </div>
             ";
-          } ?>
+          } 
+          ?>
 
           <div class="form-group">
             <label for="password">Password:</label>
-            <input type="text" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>">
+            <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>">
           </div>
 
-          <?php if (isset($errors['password'])) {
+          <?php 
+          if (isset($errors['password'])) {
             echo "
-              <div class='alert alert-danger alert-dismissible fade show text-capitalize' role='alert'>
+              <div class='alert alert-danger' role='alert'>
                 <strong>$errors[password]</strong>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
               </div>
             ";
-          } ?>
+          } 
+          ?>
 
           <button class="btn btn-primary  mt-2" name="submit">Login</button>
         </form>
@@ -82,3 +87,4 @@ $tung = ['name' => 'tung']
 
 </body>
 </html>
+
