@@ -10,21 +10,7 @@ $db = new DB(
   'jadon_db'
 );
 
-function msg( $sessionItem) {
-  if (isset($_SESSION[$sessionItem])) {
-    $alrertType = $sessionItem === 'error' ? 'danger' : 'success';
-    echo "
-      <div class='alert alert-$alrertType alert-dismissible fade show' role='alert'>
-        <strong>$_SESSION[$sessionItem][email]</strong>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-          <span aria-hidden='true'>&times;</span>
-        </button>
-      </div>
-    ";
-
-    unset($_SESSION[$sessionItem]);
-  }
-}
+/* FUNCTIONS */
 
 function uploadFiles($files, $savePath, $readPath, $table) {
   global $db;
@@ -37,30 +23,25 @@ function uploadFiles($files, $savePath, $readPath, $table) {
 
   foreach ($files['tmp_name'] as $i => $tmp_name) {
     // PREPARE FILE TO WRITE
-    $index = strrpos($files['name'][$i], '.');
-    $fileExtension = strtolower(substr($files['name'][$i], $index + 1));
-    $filePureName = substr($files['name'][$i], 0, $index);
-    $uniqueId = uniqid();
-    $saveDestination = $savePath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;
-    $readDestination = $readPath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;
+    ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = prepareFileUrl($files['name'][$i], $savePath, $readPath);
 
     // WRITE FILE TO FOLDER
-    if (!move_uploaded_file($tmp_name, $saveDestination)) {
-      return -1;
+    if (!move_uploaded_file($tmp_name, $saveUrl)) {
+      exit('Failed to write file to server');
     };
 
     // WRITE FILE ULR TO DATABASE
-    $db->alterData($query, [$readDestination]);
+    $db->alterData($query, [$readUrl]);
   }
 
   return 1;
 }
 
-function prepareFileUrl($file, $savePath, $readPath) {
+function prepareFileUrl($fileName, $savePath, $readPath) {
 
-    $index = strrpos($file['name'], '.');
-    $fileExtension = strtolower(substr($file['name'], $index + 1));
-    $filePureName = substr($file['name'], 0, $index);
+    $index = strrpos($fileName, '.');
+    $fileExtension = strtolower(substr($fileName, $index + 1));
+    $filePureName = substr($fileName, 0, $index);
     $uniqueId = uniqid();
     $saveUrl = $savePath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;
     $readUrl = $readPath . $filePureName . '.' . $uniqueId . '.' . $fileExtension;

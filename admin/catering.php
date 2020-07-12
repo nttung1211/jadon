@@ -1,5 +1,5 @@
 <?php include '../lib/db.php'; ?>
-
+<?php include 'cms.check-logged-in.php'; ?>
 
 <?php include './components/header.php'; ?>
   <!-- <script src="js/index.js" type="module" defer></script> -->

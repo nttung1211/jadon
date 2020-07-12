@@ -1,19 +1,9 @@
-<?php include '../lib/db.php'; ?>
+<?php include '../lib/db.php'; $currentPage = 'managers.php'; ?>
+<?php include './cms.check-logged-in.php'; ?>
+<?php include './components/header.php'; ?>
 
-<?php
-
-if (!isset($_SESSION['jadon_loggedIn'])) {
-  header('Location: login.php');
-  exit();
-}
-
-?>
-
-<?php include './components/header.php';
-$currentPage = 'managers.php' ?>
-
-<script src="js/managers.js" type="module" defer></script>
-<link rel="stylesheet" href="css/managers.css">
+<script src="./js/managers.js" type="module" defer></script>
+<link rel="stylesheet" href="./css/managers.css">
 <title>Managers</title>
 
 <?php include './components/navigation.php'; ?>
@@ -22,7 +12,8 @@ $currentPage = 'managers.php' ?>
   <div class="row mt-4">
 
     <div class="col-sm-12 col-lg-9 mx-auto mt-2">
-      <a href="add-manager.php" class="btn btn-success mb-4">Add an account</a>
+      <?php echo $_SESSION['jadon_loggedIn']['level'] !== 'manager' ? '<a href="managers.add.php" class="btn btn-success mb-4">Add an account</a>' : '' ?>
+      
       <ul id="manager-container" class="list-group"></ul>
     </div>
   </div>

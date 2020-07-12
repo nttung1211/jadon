@@ -1,15 +1,19 @@
-<?php include '../lib/db.php'; ?>
+<?php include './../lib/db.php'; $currentPage = 'managers.php';?>
+<?php include './cms.check-logged-in.php'; ?>
 
 <?php
 
 if (!isset($_POST['submit'])) goto end;
 
 require '../lib/validator.class.php';
+
+/* check all input by validator */
 $validation = new AddManagerValidator($_POST);
 $errors = $validation->validateForm();
 
 if (count($errors)) goto end;
 
+/* check if username already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE username = ?;", [$_POST['username']]);
 
 if ($rows !== 0) {
@@ -17,6 +21,7 @@ if ($rows !== 0) {
   goto end;
 }
 
+/* check if email already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE email = ?;", [$_POST['email']]);
 
 if ($rows !== 0) {
@@ -24,17 +29,20 @@ if ($rows !== 0) {
   goto end;
 }
 
+/* prepare image name */
 if ($_FILES['upload']['name']) {
-  ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload'], '../img/managers/', '../img/managers/'));
+  ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload']['name'], '../img/managers/', '../img/managers/'));
 } else {
   $saveUrl = '';
   $readUrl = '';
 }
 
+/* write image to server folder */
 if ($saveUrl && !move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
   exit('An error occur while writting file to server.');
 };
 
+/* write image url to datbase */
 $db->alterData("
   INSERT INTO 
     managers
@@ -60,24 +68,13 @@ exit();
 end:
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<?php include './components/header.php'; ?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="./js/managers.add.js" type="module" defer></script>
+<title>Add manager</title>
 
-  <link rel="stylesheet" href="../lib/css/all.min.css">
-  <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
-  <script src="../lib/js/jquery.slim.min.js" defer></script>
-  <script src="../lib/js/bootstrap.bundle.min.js" defer></script>
+<?php include './components/navigation.php'; ?>
 
-  <link rel="stylesheet" href="css/global.css">
-  <script src="js/add-manager.js" type="module" defer></script>
-  <title>Add manager</title>
-</head>
-
-<body>
   <div class="container">
     <div class="row">
       <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
@@ -148,7 +145,12 @@ end:
             <label for="level">Level:</label>
             <select name="level" id="level" class="custom-select">
               <option <?php echo isset($_POST['level']) && ($_POST['level'] === 'manager') ? 'selected' : ''; ?> value="manager">Manager</option>
-              <option <?php echo isset($_POST['level']) && ($_POST['level'] === 'admin') ? 'selected' : ''; ?> value="admin">Admin</option>
+              <?php
+              if ($_SESSION['jadon_loggedIn']['level'] === 'super-admin') {
+                $selected = isset($_POST['level']) && ($_POST['level'] === 'admin') ? 'selected' : '';
+                echo "<option $selected value='admin'>Admin</option>";
+              };
+              ?>
             </select>
           </div>
 
@@ -168,6 +170,4 @@ end:
     </div>
   </div>
 
-</body>
-
-</html>
+<?php include './components/footer.php'; ?>

@@ -8,3 +8,4 @@ const sideBar = document.querySelector('.side-bar');
 sideBarToggler.addEventListener('click', () => {
   sideBar.classList.toggle('toggled');
 });
+

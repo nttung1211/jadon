@@ -100,19 +100,3 @@ class AddManagerValidator extends Validator {
     ] 
   ];
 }
-
-
-// [
-//   'username' => [
-//     'regex' => '/^[A-Za-z0-9]{6,20}$/',
-//     'message' => 'username must be 6-20 characters and alphanumeric.'
-//   ], 
-//   'email' => [
-//     'regex' => '/^\w{6,20}@\w{2,20}\.\w{2,20}$/',
-//     'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
-//   ], 
-//   'password' => [
-//     'regex' => '/^[A-Za-z0-9]{6,20}$/',
-//     'message' => 'password must be 6-20 characters and alphanumeric.'
-//   ]
-// ];

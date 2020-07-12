@@ -1,4 +1,4 @@
-<?php include '../lib/db.php'; $currentPage = 'index.php';?>
+<?php include '../lib/db.php'; $currentPage = 'home.introduction.php';?>
 <?php include 'cms.check-logged-in.php'; ?>
 
 <?php include './components/header.php'; ?>

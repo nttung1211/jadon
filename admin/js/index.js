@@ -13,7 +13,7 @@ updateSlideshowImages();
 
 /* UPLOAD IMAGES */
 uploadInput.addEventListener("input", async () => {
-  await postMultipleFiles('upload-home-slideshow-images.php', uploadInput.files, 'upload[]');
+  await postMultipleFiles('home.slideshow.upload.php', uploadInput.files, 'upload[]');
   await updateSlideshowImages();
 });
 
@@ -24,7 +24,7 @@ imageContainer.addEventListener('click', async (e) => {
 
     document.querySelector('#confirmDelete .btn-danger').addEventListener('click', async () => {
       await alterData('../lib/delete-file.php', { fileName: e.target.dataset.imgUrl })
-      await alterData('delete-home-slideshow-images.php', { id: `${e.target.id}` });
+      await alterData('home.slideshow.delete.php', { id: `${e.target.id}` });
       await updateSlideshowImages();
     }, { once: true });
   }
