@@ -8,7 +8,7 @@ if (!isset($_POST['submit'])) goto end;
 require '../lib/validator.class.php';
 
 /* check all input by validator */
-$validation = new AddManagerValidator($_POST);
+$validation = new ManagerValidator($_POST);
 $errors = $validation->validateForm();
 
 if (count($errors)) goto end;

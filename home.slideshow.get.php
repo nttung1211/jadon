@@ -1,7 +1,7 @@
 <?php
 include 'lib/db.php';
 
-$rows = $db->getData("SELECT * FROM home_slideshow_photos;");
+$rows = $db->getData("SELECT * FROM home_slideshow;");
 
 if ($rows) {
   echo json_encode($rows);

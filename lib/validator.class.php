@@ -80,7 +80,7 @@ class SignupValidator extends Validator {
   ];
 }
 
-class AddManagerValidator extends Validator {
+class ManagerValidator extends Validator {
   protected $fields = [
     'fullname' => [
       'regex' => '/^[A-Za-z ]{1,50}$/',
@@ -98,5 +98,22 @@ class AddManagerValidator extends Validator {
       'regex' => '/^\w{4,20}@\w{2,20}\.\w{2,20}$/',
       'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
     ] 
+  ];
+}
+
+class HomeSlideshowValidator extends Validator {
+  protected $fields = [
+    'title' => [
+      'regex' => '/^.+$/',
+      'message' => ''
+    ], 
+    'caption' => [
+      'regex' => '/^.+$/',
+      'message' => ''
+    ],
+    'order' => [
+      'regex' => '/^\d+|(auto)$/',
+      'message' => 'Order must be a positive number or "auto"'
+    ]
   ];
 }

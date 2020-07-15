@@ -2,19 +2,43 @@
 <?php include './cms.check-logged-in.php'; ?>
 <?php include './components/header.php'; ?>
 
-<script src="./js/managers.js" type="module" defer></script>
 <link rel="stylesheet" href="./css/managers.css">
+<link rel="stylesheet" href="../lib/css/dataTables.bootstrap4.min.css">
+<script src="../lib/js/jquery.dataTables.min.js" defer></script>
+<script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
+<script src="./js/managers.js" type="module" defer></script>
 <title>Managers</title>
 
 <?php include './components/navigation.php'; ?>
 
-<div class="container-fluid">
-  <div class="row mt-4">
+<div class="container">
+  <div class="row">
 
-    <div class="col-sm-12 col-lg-9 mx-auto mt-2">
-      <?php echo $_SESSION['jadon_loggedIn']['level'] !== 'manager' ? '<a href="managers.add.php" class="btn btn-success mb-4">Add an account</a>' : '' ?>
+    <div class="col-sm-12 mt-4">
+      <?php echo $_SESSION['jadon_loggedIn']['level'] !== 'manager' ? '<a href="managers.add.php" class="btn btn-success">Add an account</a>' : '' ?>
       
-      <ul id="manager-container" class="list-group"></ul>
+      <div class="card rounded shadow-sm border-0 mt-4">
+        <div class="card-body p-4 bg-white rounded">
+          <div class="table-responsive">
+            <table id="managersTable" style="width:100%" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Fullname</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Level</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="manager-container">
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

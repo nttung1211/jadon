@@ -1,40 +1,6 @@
-#manager-container img {
-  width: 160px;
-  height: 160px;
+table img {
+  width: 50px;
+  height: 50px;
   object-fit: cover;
-}
-
-#manager-container p {
-  font-size: .9rem;
-}
-
-#manager-container p a {
-  text-decoration: underline;
-}
-
-#manager-container .badge {
-  font-size: .8rem;
-}
-
-@media (max-width: 575px) {
-  #manager-container img {
-    width: 100%;
-    height: 200px;
-  }
-
-  #manager-container {
-    margin: 12%;
-  }
-}
-
-@media (max-width: 480px) {
-  #manager-container {
-    margin: 4%;
-  }
-}
-
-@media (max-width: 414px) {
-  #manager-container {
-    margin: 2%;
-  }
+  border-radius: 50%;
 }

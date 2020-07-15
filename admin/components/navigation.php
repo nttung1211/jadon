@@ -9,7 +9,7 @@
             <a href="index.php" class="brand">Jadon</a>
 
             <ul class="list-group" id="accordionExample">
-              <ul class="list-group-item list-group-item_home <?php echo $currentPage === 'index.php' || $currentPage === 'home.introduction.php' ? 'active' : '' ?>"><a class="homeBtn"><i class="fas fa-home"></i>Home<i class="fas fa-chevron-right"></i></a>
+              <ul class="list-group-item list-group-item_home <?php echo $currentPage === 'index.php' || $currentPage === 'home.introduction.php' ? 'active' : '' ?>"><a class="homeBtn"><i class="fas fa-home"></i><span>Home</span><i class="fas fa-chevron-right"></i></a>
                 <li class="list-group-sub-item <?php echo $currentPage === 'index.php' ? 'active' : '' ?>"><a href="index.php">Slideshow</a></li>
                 <li class="list-group-sub-item <?php echo $currentPage === 'home.introduction.php' ? 'active' : '' ?>"><a href="home.introduction.php">Introduction</a></li>
               </ul>

@@ -1,10 +1,14 @@
-<?php include '../lib/db.php'; $currentPage = 'home.introduction.php';?>
+<?php include '../lib/db.php';
+$currentPage = 'home.introduction.php'; ?>
 <?php include 'cms.check-logged-in.php'; ?>
 
 <?php include './components/header.php'; ?>
 
-<script src="js/index.js" type="module" defer></script>
 <link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="../lib/css/dataTables.bootstrap4.min.css">
+<script src="../lib/js/jquery.dataTables.min.js" defer></script>
+<script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
+<script src="js/index.js" type="module" defer></script>
 <title>Home</title>
 
 <?php include './components/navigation.php'; ?>
@@ -12,40 +16,48 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 mt-4">
-
-      <ul id="myTab2" role="tablist" class="nav nav-tabs nav-pills with-arrow lined flex-row text-center">
-        <li class="nav-item flex-fill">
-          <a id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="<?php echo isset($_SESSION['jadon_introduction']) ? 'false' : 'true'; unset($_SESSION['jadon_introduction']); ?>" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active">Slideshow Images</a>
-        </li>
-        <li class="nav-item flex-fill">
-          <a id="introduction-tab" data-toggle="tab" href="#introduction" role="tab" aria-controls="introduction" aria-selected="<?php echo isset($_SESSION['jadon_introduction']) ? 'true' : 'false'; unset($_SESSION['jadon_introduction']); ?>" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">Introduction articles</a>
-        </li>
-      </ul>
-
-      <div id="myTab2Content" class="tab-content">
-        <div id="home" role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade px-4 py-5 show active">
-          <form enctype="multipart/form-data">
-            <div class="form-group">
-              <div class="row">
-                <div class="col-xl-3 col-md-4 col-5 mx-auto m-3">
-                  <label for="upload" class="file-upload btn btn-primary btn-block border-0 py-2 shadow-sm">
-                    <i class="fa fa-upload mr-2"></i>Upload
-                    <input id="upload" type="file" multiple>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <div class="row" id="image-container"></div>
-
-        </div>
-
-        <div id="introduction" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-5">
-          <a href="introduction-articles.edit.php" class="btn btn-primary">Edit</a>
+      <div class="card rounded shadow-sm border-0">
+        <div class="card-body p-5 bg-white rounded">
+          <div class="table-responsive">
+            <table id="example" style="width:100%" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Caption</th>
+                  <th>Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>Edinburgh</td>
+                  <td>61</td>
+                </tr>
+                <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+                  <td>Tokyo</td>
+                  <td>63</td>
+                </tr>
+                <tr>
+                  <td>Ashton Cox</td>
+                  <td>Junior Technical Author</td>
+                  <td>San Francisco</td>
+                  <td>66</td>
+                </tr>
+                <tr>
+                  <td>Cedric Kelly</td>
+                  <td>Senior Javascript Developer</td>
+                  <td>Edinburgh</td>
+                  <td>22</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 

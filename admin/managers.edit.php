@@ -15,7 +15,7 @@ $manager = $rows[0];
 if (!isset($_POST['submit'])) goto end;
 
 require '../lib/validator.class.php';
-$validation = new AddManagerValidator($_POST);
+$validation = new ManagerValidator($_POST);
 $errors = $validation->validateForm();
 
 if (count($errors)) goto end;
@@ -185,10 +185,7 @@ end:
           <div class="image-area mb-2">
 
             <?php
-            if (isset($_POST['img_url']) && !empty($_POST['img_url'])) {
-              $src = htmlspecialchars($_POST['img_url']);
-              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$src' alt='image'>";
-            } elseif (!empty($manager['img_url'])) {
+            if (!empty($manager['img_url'])) {
               echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$manager[img_url]' alt='image'>";
             }
             ?>

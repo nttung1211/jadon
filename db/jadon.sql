@@ -2,23 +2,26 @@ DROP DATABASE jadon_db;
 CREATE DATABASE jadon_db;
 USE jadon_db;
 
-CREATE TABLE categories(
+CREATE TABLE service_categories(
 	id INT PRIMARY KEY	AUTO_INCREMENT,
     name VARCHAR(100)
 );
 
 CREATE TABLE services(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    categories_id INT,
-    suggested_price FLOAT,
-    FOREIGN KEY (categories_id) REFERENCES categories(id)
+    service_categories_id INT,
+    title VARCHAR(100),
+    subtitle TEXT,
+    description TEXT,
+    img_url TEXT,
+    FOREIGN KEY (service_categories_id) REFERENCES service_categories(id),
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
 
-CREATE table services_photos(
+CREATE table service_photos(
 	id INT PRIMARY KEY AUTO_INCREMENT, 
-    img_url VARCHAR(200),
+    img_url TEXT,
     services_id INT,
     FOREIGN KEY(services_id) REFERENCES services(id)
 );
@@ -26,7 +29,7 @@ CREATE table services_photos(
 CREATE table latest_work(
 	id INT PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(100),
-	description TEXT(1000),
+	description TEXT,
 	event_date DATE
 );
 
@@ -40,7 +43,7 @@ CREATE table users(
 
 CREATE table comments(
 	id INT PRIMARY KEY AUTO_INCREMENT, 
-	content VARCHAR(1000),
+	content TEXT,
     users_id INT,
     latest_work_id INT,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -59,7 +62,7 @@ CREATE table likes(
 
 CREATE table latest_work_photos(
 	id INT PRIMARY KEY AUTO_INCREMENT, 
-    img_url VARCHAR(200),
+    img_url TEXT,
     latest_work_id INT,
     FOREIGN KEY(latest_work_id) REFERENCES latest_work(id)
 );
@@ -74,12 +77,16 @@ CREATE table clients(
     event_date DATE,
     event_location VARCHAR(100),
     submitted_at TIMESTAMP DEFAULT NOW(),
-    additional_info TEXT(100)
+    additional_info TEXT
 );
 
-CREATE TABLE home_slideshow_photos(
+CREATE TABLE home_slideshow(
     id INT PRIMARY KEY AUTO_INCREMENT, 
-    img_url VARCHAR(200)
+    img_url TEXT,
+    title VARCHAR(100),
+    caption TEXT,
+    img_order INT,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE managers(
@@ -89,17 +96,12 @@ CREATE TABLE managers(
     email VARCHAR(50),
 	password VARCHAR(50),
     level VARCHAR(50),
-    img_url VARCHAR(200),
+    img_url TEXT,
     last_activity_time TIMESTAMP, 
     created_at TIMESTAMP DEFAULT NOW()
 )
 
--- INSERT INTO `managers`(
---     `fullname`, `username`, `email`, `password`, `level`, `img_url`, `last_activity_time`
--- ) 
--- VALUES (
---     'Nguyen Thanh Tung','admin','nttung1211@gmail.com','admin','admin','../img/tung.JPG','2020-8-7 19-5-4'
--- );
+
 
 
 

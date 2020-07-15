@@ -1,3 +1,9 @@
 .home-part {
   font-size: 1.2rem;
 }
+
+table img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+}
