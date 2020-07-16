@@ -83,8 +83,9 @@ end:
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <label for="fullname">Fullname:</label>
-            <input type="text" name="fullname" id="fullname" class="form-control" value="<?php echo htmlspecialchars($_POST['fullname'] ?? ''); ?>">
+            <input type="text" name="fullname" id="fullname" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['fullname'] ?? ''); ?>">
           </div>
+          <div id = 'fullname-error'></div>
 
           <?php
           if (isset($errors['fullname'])) {
@@ -98,8 +99,9 @@ end:
 
           <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" name="username" id="username" class="form-control" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
+            <input type="text" name="username" id="username" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
           </div>
+          <div id = 'username-error'></div>
 
           <?php
           if (isset($errors['username'])) {
@@ -113,8 +115,9 @@ end:
 
           <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>">
+            <input type="password" name="password" id="password" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>">
           </div>
+          <div id = 'password-error'></div>
 
           <?php
           if (isset($errors['password'])) {
@@ -128,8 +131,9 @@ end:
 
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+            <input type="text" name="email" id="email" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
           </div>
+          <div id = 'email-error'></div>
 
           <?php
           if (isset($errors['email'])) {

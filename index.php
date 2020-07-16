@@ -51,7 +51,6 @@ $rows = $db->getData("SELECT * FROM home_slideshow ORDER BY img_order;");
       ?>
     </ol>
     <div class="carousel-inner" role="listbox">
-      <!-- Slide One - Set the background image for this slide in the line below -->
       <?php
       if ($rows !== 0) {
         foreach ($rows as $i => $row) {

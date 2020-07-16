@@ -8,7 +8,7 @@ $rows = $db->getData("SELECT * FROM services ORDER BY created_at DESC;");
 <title>Services</title>
 <?php require 'components/navigation.php'; ?>
 
-<div class="container">
+<div class="container sercives-container">
   <div class="row">
   <?php 
   if ($rows !== 0) {
@@ -20,7 +20,7 @@ $rows = $db->getData("SELECT * FROM services ORDER BY created_at DESC;");
             <div class='card-body text-center'>
               <h5 class='card-title mb-0'>$row[title]</h5>
               <div class='card-text text-black-50'>$row[subtitle]</div>
-              <a class='text-primary stretched-link' data-id='$row[id]'>See details</a>
+              <a class='text-primary stretched-link mt-4' data-id='$row[id]'>See details</a>
             </div>
           </div>
         </div>
