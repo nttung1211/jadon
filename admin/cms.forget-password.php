@@ -49,13 +49,13 @@ if (isset($_POST['submit'])) {
         $mail->isSMTP();
         $mail->Host       = "smtp.gmail.com";
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'nttung1211@gmail.com';
-        $mail->Password   = 'Tungnguyen12';
+        $mail->Username   = 'jadon.c1908i@gmail.com';
+        $mail->Password   = 'jadon2020';
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
 
         //Recipients
-        $mail->setFrom('nttung1211@gmail.com', 'Tung');
+        $mail->setFrom('jadon_c1908i@gmail.com', 'Jadon');
         $mail->addAddress('ntmai19563@gmail.com', 'Mai');
 
         // Content
@@ -69,8 +69,9 @@ if (isset($_POST['submit'])) {
       } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
       }
+      // REFERENCE: https://github.com/PHPMailer/PHPMailer
 
-      $_SESSION['success'] = "Your new password is sent to $_POST[email]: $newPassword";
+      $_SESSION['success'] = "Your new password is sent to $_POST[email]";
       header('Location: index.php');
       exit();
     }

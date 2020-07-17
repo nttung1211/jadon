@@ -61,23 +61,6 @@ class LoginValidator extends Validator {
   ];
 }
 
-class SignupValidator extends Validator {
-  protected $fields = [
-    'username' => [
-      'regex' => '/^[A-Za-z0-9]{4,20}$/',
-      'message' => 'password must be 4-20 characters and alphanumeric.'
-    ], 
-    'password' => [
-      'regex' => '/^[A-Za-z0-9]{4,20}$/',
-      'message' => 'password must be 4-20 characters and alphanumeric.'
-    ],
-    'email' => [
-      'regex' => '/^\w{4,20}@\w{2,20}\.\w{2,20}$/',
-      'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
-    ] 
-  ];
-}
-
 class ManagerValidator extends Validator {
   protected $fields = [
     'fullname' => [

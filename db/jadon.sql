@@ -97,7 +97,7 @@ CREATE TABLE managers(
 	password VARCHAR(100),
     level VARCHAR(100),
     img_url TEXT,
-    last_activity_time DATETIME, 
+    last_activity_time DATETIME DEFAULT NOW(), 
     created_at DATETIME DEFAULT NOW()
 )
 

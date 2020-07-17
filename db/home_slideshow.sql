@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 16, 2020 at 01:46 PM
+-- Generation Time: Jul 17, 2020 at 04:39 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -34,7 +34,7 @@ CREATE TABLE `home_slideshow` (
   `title` varchar(100) DEFAULT NULL,
   `caption` text DEFAULT NULL,
   `img_order` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

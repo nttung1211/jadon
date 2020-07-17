@@ -42,9 +42,9 @@
                     <i class="fas fa-sign-out-alt px-2"></i>
                     Logout
                   </a>
-                  <a class="dropdown-item text-secondary" href="#">
-                    <i class="fas fa-user-cog px-2"></i>
-                    Setting
+                  <a class="dropdown-item text-secondary" href="cms.account.php?id=<?php echo $_SESSION['jadon_loggedIn']['id']?>">
+                    <i class="fas fa-user-cog pl-2 pr-1"></i>
+                    Account
                   </a>
                 </div>
               </li>
