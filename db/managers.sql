@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 12, 2020 at 05:02 PM
+-- Generation Time: Jul 16, 2020 at 01:46 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `managers` (
   `id` int(11) NOT NULL,
-  `fullname` varchar(50) DEFAULT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `level` varchar(50) DEFAULT NULL,
-  `img_url` varchar(200) DEFAULT NULL,
+  `fullname` varchar(100) DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `level` varchar(100) DEFAULT NULL,
+  `img_url` text DEFAULT NULL,
   `last_activity_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -45,10 +45,10 @@ CREATE TABLE `managers` (
 --
 
 INSERT INTO `managers` (`id`, `fullname`, `username`, `email`, `password`, `level`, `img_url`, `last_activity_time`, `created_at`) VALUES
-(24, 'Nguyen Thanh Hung', 'nthung', 'nthung@gmail.com', 'hung123', 'admin', '../img/managers/cool-background.5f073199edd97.png', '2020-07-12 02:40:26', '2020-07-09 15:02:49'),
-(25, 'Nguyen Thanh Tung', 'admin', 'nttung@gmail.com', 'admin', 'super-admin', '../img/managers/background-business-camera-593322.5f07d1907768a.jpg', '2020-07-12 14:59:13', '2020-07-10 02:25:20'),
-(29, 'Ngo Thi Mai', 'ntmai', 'ntmai@gmail.com', 'mai123', 'manager', '../img/managers/gal-gadot-2880x1800-red-carpet-european-premiere-4k-3338.5f09e5f4dd38e.jpg', '2020-07-11 16:16:52', '2020-07-11 16:16:52'),
-(30, 'Nguyen Thanh Minh', 'ntminh', 'ntminh@gmail.com', 'duc123', 'manager', '../img/managers/ilya-pavlov-87438-unsplash.5f0a86455c132.jpg', '2020-07-12 03:52:48', '2020-07-11 16:36:25');
+(25, 'Nguyen Thanh Tung', 'admin', 'nttung@gmail.com', '$2y$10$MweEAMGW4GqgVpVcUNW/GeEabeLiH42FIS5K98crDald6v3SC00hG', 'super-admin', '../img/managers/code.5f10387bd26b3.jpg', '2020-07-16 11:35:04', '2020-07-09 12:25:20'),
+(30, 'Nguyen Anh Duc', 'naduc', 'naduc@gmail.com', '$2y$10$kUtcgwbMuqiXiFnVKlS78udTeg.jwGjdsiVCKaNEvpjNqnHEfiT2K', 'admin', '../img/managers/dna.5f103a3fc8612.jpg', '2020-07-16 11:34:41', '2020-07-16 11:10:54'),
+(24, 'Nguyen Thanh Hung', 'nthung', 'nthung@gmail.com', '$2y$10$iUkwi7XIXhddHWKWyGCmeOaypZ4rz74iZ6129PVvTcbgNvqduj86G', 'admin', '../img/managers/blue.5f10381a8b960.png', '2020-07-16 11:20:58', '2020-07-09 01:02:49'),
+(29, 'Ngo Thi Mai', 'ntmai', 'ntmai@gmail.com', '$2y$10$3F1lWsVsYACoTN78Bozd4eJKz4rePZnOjkbCAbmqCiV4j0JxVIlWa', 'manager', '../img/managers/gal-galdot.5f1039e1a8358.jpg', '2020-07-16 11:28:33', '2020-07-11 02:16:52');
 
 --
 -- Indexes for dumped tables

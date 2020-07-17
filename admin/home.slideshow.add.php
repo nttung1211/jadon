@@ -3,17 +3,16 @@ $currentPage = 'index.php'; ?>
 <?php include './cms.check-logged-in.php'; ?>
 
 <?php
-
+/* check if there was a submission */
 if (!isset($_POST['submit'])) goto end;
 
+/* check if inputs have an incorrect pattern */
 require '../lib/validator.class.php';
-
-/* check all input by validator */
 $validation = new HomeSlideshowValidator($_POST);
 $errors = $validation->validateForm();
 
-/* prepare image name */
 if ($_FILES['upload']['name']) {
+  /* prepare image name if there is image uploaded */
   ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload']['name'], '../img/home-slideshow/', '../img/home-slideshow/'));
 } else {
   $errors['upload'] = 'Please choose an image.';
@@ -21,12 +20,7 @@ if ($_FILES['upload']['name']) {
 
 if (count($errors)) goto end;
 
-/* write image to server folder */
-if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
-  exit('An error occur while writting file to server.');
-};
-
-/* write image url to datbase */
+/* prepare the image order */
 $rows = $db->getData('SELECT * FROM home_slideshow ORDER BY img_order DESC LIMIT 1;');
 
 if ($rows !== 0) {
@@ -44,6 +38,7 @@ if ($_POST['order'] !== "auto") {
   $imgOrder = $_POST['order'];
 }
 
+/* prepare query */
 $query = "
   INSERT INTO 
     home_slideshow
@@ -54,7 +49,13 @@ $query = "
     img_order = ?
 ";
 
+/*  write image url to datbase  */
 $db->alterData($query, [$readUrl, $_POST['title'], $_POST['caption'], $imgOrder]);
+
+/* write image to server folder */
+if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
+  exit('An error occur while writting file to server.');
+};
 
 header('Location: index.php');
 exit();

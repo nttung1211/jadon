@@ -1,9 +1,6 @@
 <?php include '../lib/db.php'; ?>
 <?php 
-
-if (isset($_SESSION['jadon_loggedIn'])) {
-  unset($_SESSION['jadon_loggedIn']);
-}
-
+session_destroy();
+setcookie('jadon_loggedIn', '', time() - 86400, '/');
 header('Location: index.php');
 exit();

@@ -16,14 +16,16 @@ if (!isset($_POST['submit'])) goto end;
 
 require '../lib/validator.class.php';
 
-/* check all input by validator */
+/* check if inputs have a correct pattern */
 $validation = new HomeSlideshowValidator($_POST);
 $errors = $validation->validateForm();
 if (count($errors)) goto end;
 
-/* prepare image name */
 if ($_FILES['upload']['name']) {
+  /* prepare image name */
   ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload']['name'], '../img/home-slideshow/', '../img/home-slideshow/'));
+
+  /* prepare query and params if there is image uploaded */
   $params = [$readUrl, $_POST['title'], $_POST['caption']];
   $query = "
     UPDATE 
@@ -37,12 +39,8 @@ if ($_FILES['upload']['name']) {
       id = '$image[id]';
   ";
 
-  /* write image to server folder */
-  if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
-    exit('An error occur while writting file to server.');
-  };
-
 } else {
+  /* prepare query and params if there is NO image uploaded */
   $params = [$_POST['title'], $_POST['caption']];
   $query = "
     UPDATE 
@@ -56,6 +54,7 @@ if ($_FILES['upload']['name']) {
   ";
 }
 
+/* prepare the image order */
 $imgOrder = $image['img_order'];
 
 if ($_POST['order'] !== "auto" && $_POST['order'] !== $image['img_order']) {
@@ -69,7 +68,17 @@ if ($_POST['order'] !== "auto" && $_POST['order'] !== $image['img_order']) {
 
 $params[] = $imgOrder;
 
+/* update database */
 $db->alterData($query, $params);
+
+/* update image to server folder */
+if ($saveUrl) {
+  if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
+    exit('An error occur while writting new file to server.');
+  } elseif (!unlink($image['img_url'])) {
+    exit('An error occur while delete old file form server.');
+  }
+}
 
 header('Location: index.php');
 exit();

@@ -43,9 +43,7 @@ class Validator {
   }
 
   function addFields($fields) {
-    foreach ($fields as $field) {
-      $this->fields[] = $field;
-    }
+    $this->fields = array_merge($this->fields, $fields);
   }
 }
 

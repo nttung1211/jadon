@@ -29,6 +29,12 @@ if ($rows !== 0) {
   goto end;
 }
 
+/* check confirm password */
+if ($_POST['password'] !== $_POST['confirmPassword']) {
+  $errors['confirmPassword'] = 'Confirm password does not match.';
+  goto end;
+}
+
 /* prepare image name */
 if ($_FILES['upload']['name']) {
   ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload']['name'], '../img/managers/', '../img/managers/'));
@@ -37,12 +43,9 @@ if ($_FILES['upload']['name']) {
   $readUrl = '';
 }
 
-/* write image to server folder */
-if ($saveUrl && !move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
-  exit('An error occur while writting file to server.');
-};
-
 /* write image url to datbase */
+$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
 $db->alterData("
   INSERT INTO 
     managers
@@ -56,11 +59,16 @@ $db->alterData("
 ", [
   $_POST['fullname'],
   $_POST['username'],
-  $_POST['password'],
+  $password_hash,
   $_POST['email'],
   $_POST['level'],
   $readUrl
 ]);
+
+/* write image to server folder */
+if ($saveUrl && !move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
+  exit('An error occur while writting file to server.');
+};
 
 header('Location: managers.php');
 exit();
@@ -85,65 +93,81 @@ end:
             <label for="fullname">Fullname:</label>
             <input type="text" name="fullname" id="fullname" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['fullname'] ?? ''); ?>">
           </div>
-          <div id = 'fullname-error'></div>
-
-          <?php
-          if (isset($errors['fullname'])) {
-            echo "
-              <div class='alert alert-danger' role='alert'>
-                <strong>$errors[fullname]</strong>
-              </div>
-            ";
-          }
-          ?>
+          <div id = 'fullname-error'>
+            <?php
+            if (isset($errors['fullname'])) {
+              echo "
+                <div class='alert alert-danger' role='alert'>
+                  <strong>$errors[fullname]</strong>
+                </div>
+              ";
+            }
+            ?>
+          </div>
 
           <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
           </div>
-          <div id = 'username-error'></div>
-
-          <?php
-          if (isset($errors['username'])) {
-            echo "
-              <div class='alert alert-danger' role='alert'>
-                <strong>$errors[username]</strong>
-              </div>
-            ";
-          }
-          ?>
+          <div id = 'username-error'>
+            <?php
+            if (isset($errors['username'])) {
+              echo "
+                <div class='alert alert-danger' role='alert'>
+                  <strong>$errors[username]</strong>
+                </div>
+              ";
+            }
+            ?>
+          </div>
 
           <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['password'] ?? ''); ?>">
           </div>
-          <div id = 'password-error'></div>
+          <div id = 'password-error'>
+            <?php
+            if (isset($errors['password'])) {
+              echo "
+                <div class='alert alert-danger' role='alert'>
+                  <strong>$errors[password]</strong>
+                </div>
+              ";
+            }
+            ?>
+          </div>
 
-          <?php
-          if (isset($errors['password'])) {
-            echo "
-              <div class='alert alert-danger' role='alert'>
-                <strong>$errors[password]</strong>
-              </div>
-            ";
-          }
-          ?>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm password:</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" value="<?php echo htmlspecialchars($_POST['confirmPassword'] ?? ''); ?>">
+          </div>
+          <div id = 'confirmPassword-error'>
+            <?php
+            if (isset($errors['confirmPassword'])) {
+              echo "
+                <div class='alert alert-danger' role='alert'>
+                  <strong>$errors[confirmPassword]</strong>
+                </div>
+              ";
+            }
+            ?>
+          </div>
 
           <div class="form-group">
             <label for="email">Email:</label>
             <input type="text" name="email" id="email" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
           </div>
-          <div id = 'email-error'></div>
-
-          <?php
-          if (isset($errors['email'])) {
-            echo "
-              <div class='alert alert-danger' role='alert'>
-                <strong>$errors[email]</strong>
-              </div>
-            ";
-          }
-          ?>
+          <div id = 'email-error'>
+            <?php
+            if (isset($errors['email'])) {
+              echo "
+                <div class='alert alert-danger' role='alert'>
+                  <strong>$errors[email]</strong>
+                </div>
+              ";
+            }
+            ?>
+          </div>
 
           <div class="form-group">
             <label for="level">Level:</label>

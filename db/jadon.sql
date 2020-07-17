@@ -15,7 +15,7 @@ CREATE TABLE services(
     description TEXT,
     img_url TEXT,
     FOREIGN KEY (service_categories_id) REFERENCES service_categories(id),
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at DATETIME DEFAULT NOW()
 );
 
 
@@ -38,7 +38,7 @@ CREATE table users(
 	username VARCHAR(100),
     email VARCHAR(100),
 	password VARCHAR(100),
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at DATETIME DEFAULT NOW()
 );
 
 CREATE table comments(
@@ -46,7 +46,7 @@ CREATE table comments(
 	content TEXT,
     users_id INT,
     latest_work_id INT,
-    created_at TIMESTAMP DEFAULT NOW(),
+    created_at DATETIME DEFAULT NOW(),
 	FOREIGN KEY(users_id) REFERENCES users(id),
     FOREIGN KEY(latest_work_id) REFERENCES latest_work(id)
 );
@@ -55,7 +55,7 @@ CREATE table likes(
 	id INT PRIMARY KEY AUTO_INCREMENT, 
     users_id INT,
     latest_work_id INT,
-    created_at TIMESTAMP DEFAULT NOW(),
+    created_at DATETIME DEFAULT NOW(),
 	FOREIGN KEY(users_id) REFERENCES users(id),
     FOREIGN KEY(latest_work_id) REFERENCES latest_work(id)
 );
@@ -76,7 +76,7 @@ CREATE table clients(
     interested_service VARCHAR(100),
     event_date DATE,
     event_location VARCHAR(100),
-    submitted_at TIMESTAMP DEFAULT NOW(),
+    submitted_at DATETIME DEFAULT NOW(),
     additional_info TEXT
 );
 
@@ -86,19 +86,19 @@ CREATE TABLE home_slideshow(
     title VARCHAR(100),
     caption TEXT,
     img_order INT,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE managers(
     id INT PRIMARY KEY AUTO_INCREMENT, 
-    fullname VARCHAR(50),
-	username VARCHAR(50),
-    email VARCHAR(50),
-	password VARCHAR(50),
-    level VARCHAR(50),
+    fullname VARCHAR(100),
+	username VARCHAR(100),
+    email VARCHAR(100),
+	password VARCHAR(100),
+    level VARCHAR(100),
     img_url TEXT,
-    last_activity_time TIMESTAMP, 
-    created_at TIMESTAMP DEFAULT NOW()
+    last_activity_time DATETIME, 
+    created_at DATETIME DEFAULT NOW()
 )
 
 

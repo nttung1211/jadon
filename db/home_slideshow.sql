@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 15, 2020 at 06:23 AM
+-- Generation Time: Jul 16, 2020 at 01:46 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `home_slideshow` (
   `id` int(11) NOT NULL,
-  `img_url` varchar(200) DEFAULT NULL,
+  `img_url` text DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
-  `caption` varchar(200) DEFAULT NULL,
+  `caption` text DEFAULT NULL,
   `img_order` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -42,10 +42,11 @@ CREATE TABLE `home_slideshow` (
 --
 
 INSERT INTO `home_slideshow` (`id`, `img_url`, `title`, `caption`, `img_order`, `created_at`) VALUES
-(32, '../img/home-slideshow/cool-background.5f0db4d76e1be.png', 'stars', 'mistery', 1, '2020-07-14 13:36:23'),
-(33, '../img/home-slideshow/martin-211-unsplash.5f0db4f25a690.jpg', 'wall', 'rough', 2, '2020-07-14 13:36:50'),
-(35, '../img/home-slideshow/ilya-pavlov-87438-unsplash.5f0db691a9432.jpg', 'code', 'hard', 5, '2020-07-14 13:43:45'),
-(36, '../img/home-slideshow/background-business-camera-593322.5f0db81f2a122.jpg', 'Macbook', 'modern', 4, '2020-07-14 13:50:23');
+(32, '../img/home-slideshow/wall.5f1031963db53.jpg', 'stars', 'mistery', 1, '2020-07-14 06:36:23'),
+(33, '../img/home-slideshow/colors.5f1031ae0a6ce.jpg', 'wall', 'rough', 2, '2020-07-14 06:36:50'),
+(35, '../img/home-slideshow/dna.5f1031b53ef16.jpg', 'code', 'hard', 5, '2020-07-14 06:43:45'),
+(36, '../img/home-slideshow/blue.5f1031bc7e957.png', 'Macbook', 'modern', 4, '2020-07-14 06:50:23'),
+(37, '../img/home-slideshow/devices.5f1031f46e8bc.jpg', 'apple products', 'delicate', 6, '2020-07-16 10:54:44');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +66,7 @@ ALTER TABLE `home_slideshow`
 -- AUTO_INCREMENT for table `home_slideshow`
 --
 ALTER TABLE `home_slideshow`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

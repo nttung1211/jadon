@@ -3,8 +3,8 @@
 <?php
 
 if (isset($_POST['submit'])) {
-  require '../lib/validator.class.php';
 
+  require '../lib/validator.class.php';
   $validation = new LoginValidator($_POST);
   $errors = $validation->validateForm();
 
@@ -14,10 +14,15 @@ if (isset($_POST['submit'])) {
       $errors['username'] = 'Username does not exist.';
     } else {
       $user = $rows[0];
-      if ($user['password'] !== $_POST['password']) {
+      if (!password_verify( $_POST['password'], $user['password'])) {
         $errors['password'] = 'Wrong password.';
       } else {
         $_SESSION['jadon_loggedIn'] = $user;
+
+        if (isset($_POST['remember'])) {
+          setcookie('jadon_loggedIn', serialize($user), time() + 86400, '/');
+        }
+        
         header('Location: index.php');
         exit();
       }
@@ -49,11 +54,23 @@ if (isset($_POST['submit'])) {
   <div class="container">
     <div class="row">
       <div class="col-lg-5 col-md-7 col-9 rounded" id="formWrapper">
+        <?php
+          if (isset($_SESSION['success'])) {
+            echo "
+              <div class='alert alert-success mb-4' role='alert'>
+                <strong>$_SESSION[success]</strong>
+              </div>
+            ";
+
+            unset($_SESSION['success']);
+          }
+        ?>
+
         <h1 class="my-5 text-center">Welcome!</h1>
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
           <div class="form-group">
-            <!-- <label for="username"></label> -->
+            <label for="username"></label>
             <i class="fas fa-user"></i>
             <input autocomplete="off" placeholder="Username" type="text" name="username" id="username" class="form-control" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
           </div>
@@ -83,6 +100,12 @@ if (isset($_POST['submit'])) {
             ";
           }
           ?>
+
+          <div class="form-check d-flex justify-content-between">
+            <input class="form-check-input" type="checkbox" name="remember" id="remember" class="form-control" value="<?php echo htmlspecialchars($_POST['remember'] ?? ''); ?>">
+            <label class="form-check-label text-secondary" for="remember"><small>Remember me</small></label>
+            <a href="cms.forget-password.php"><small>Forget password?</small></a>
+          </div>
 
           <button class="btn btn-primary btn-block rounded-pill shadow" name="submit">Login</button>
         </form>

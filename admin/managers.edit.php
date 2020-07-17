@@ -3,7 +3,7 @@ $currentPage = 'managers.php'; ?>
 <?php include './cms.check-logged-in.php'; ?>
 
 <?php
-
+/* get current data of the manager */
 $rows = $db->getData("SELECT * FROM managers WHERE id = ?;", [$_GET['id']]);
 
 if ($rows === 0) {
@@ -12,14 +12,21 @@ if ($rows === 0) {
 
 $manager = $rows[0];
 
+/* check if there was a post */
 if (!isset($_POST['submit'])) goto end;
 
+/* check if inputs have a wrong pattern */
 require '../lib/validator.class.php';
 $validation = new ManagerValidator($_POST);
 $errors = $validation->validateForm();
 
+if ($_POST['password'] === $manager['password']) {
+  unset($errors['password']);
+}
+
 if (count($errors)) goto end;
 
+/* check if username already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE username = ?;", [$_POST['username']]);
 
 if ($rows !== 0 && $rows[0]['username'] !== $manager['username']) {
@@ -27,6 +34,7 @@ if ($rows !== 0 && $rows[0]['username'] !== $manager['username']) {
   goto end;
 }
 
+/* check if email already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE email = ?;", [$_POST['email']]);
 
 if ($rows !== 0 && $rows[0]['email'] !== $manager['email']) {
@@ -34,10 +42,17 @@ if ($rows !== 0 && $rows[0]['email'] !== $manager['email']) {
   goto end;
 }
 
+/* if the being edited account is super-admin then the level can not be changed */
 $level = $manager['level'] === 'super-admin' ? 'super-admin' : $_POST['level'];
 
+/* hash password */
+$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
 if ($_FILES['upload']['name']) {
+  /* prepare image name if there is image uploaded */
   ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = (prepareFileUrl($_FILES['upload']['name'], '../img/managers/', '../img/managers/'));
+
+  /* update database */
   $db->alterData(
     "UPDATE
       managers
@@ -53,7 +68,7 @@ if ($_FILES['upload']['name']) {
     [
       $_POST['fullname'],
       $_POST['username'],
-      $_POST['password'],
+      $password_hash,
       $_POST['email'],
       $level,
       $readUrl,
@@ -61,10 +76,19 @@ if ($_FILES['upload']['name']) {
     ]
   );
 
-  if ($saveUrl && !move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
-    exit('An error occur while writting file to server.');
-  };
+  /* update image in server folder */
+  if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
+    exit('An error occur while writting new file to server.');
+  } elseif (!unlink($manager['img_url'])) {
+    exit('An error occur while delete old file form server.');
+  }
+
+  if ($_SESSION['jadon_loggedIn']['id'] === $manager['id']) {
+    $_SESSION['jadon_loggedIn']['img_url'] = $readUrl;
+  }
+
 } else {
+  /* if there is no image chosen we will not update img_url and image in server folder */
   $db->alterData(
     "UPDATE
       managers
