@@ -78,12 +78,14 @@ end:
 
 <?php include './components/header.php'; ?>
 
-<script src="./js/managers.add.js" type="module" defer></script>
+<script src="./js/shared/displayUploadImage.js" type="module" defer></script>
+<script src="./js/managers.add.live-validate.js" type="module" defer></script>
 <title>Add manager</title>
 
 <?php include './components/navigation.php'; ?>
 
   <div class="container">
+    <a class="btn btn-primary mt-4 px-4" href="managers.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
     <div class="row">
       <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
         <h2 class="my-4">Add manager</h2>
@@ -191,8 +193,7 @@ end:
             </label>
           </div>
 
-          <button class="btn btn-success btn-block mt-2 py-2 mb-1" name="submit">Add</button>
-          <a class="btn btn-primary btn-block mt-2 py-2 mb-5" href="managers.php">Back</a>
+          <button class="btn btn-success btn-block mt-4 py-2 mb-5" name="submit">Add</button>
         </form>
       </div>
     </div>

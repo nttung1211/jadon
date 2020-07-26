@@ -20,6 +20,7 @@ function uploadFiles($files, $savePath, $readPath, $table) {
     SET 
       img_url = ?;
   ";
+  //+ is_uploaded_file();
 
   foreach ($files['tmp_name'] as $i => $tmp_name) {
     // PREPARE FILE TO WRITE

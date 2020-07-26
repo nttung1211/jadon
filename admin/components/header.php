@@ -11,4 +11,4 @@
   <script src="../lib/js/bootstrap.bundle.min.js" defer></script>
 
   <link rel="stylesheet" href="css/global.css">
-  <script src="js/global.js" defer></script>
+  <script src="js/shared/global.js" defer></script>

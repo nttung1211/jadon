@@ -52,11 +52,11 @@ class LoginValidator extends Validator {
   protected $fields = [
     'username' => [
       'regex' => '/^.+$/',
-      'message' => ''
+      'message' => 'username can not be empty'
     ], 
     'password' => [
       'regex' => '/^.+$/',
-      'message' => ''
+      'message' => 'password can not be empty'
     ]
   ];
 }
@@ -86,15 +86,78 @@ class HomeSlideshowValidator extends Validator {
   protected $fields = [
     'title' => [
       'regex' => '/^.+$/',
-      'message' => ''
+      'message' => 'title can not be empty'
     ], 
     'caption' => [
-      'regex' => '/^.+$/',
-      'message' => ''
+      'regex' => '/^[\s\S]+$/',
+      'message' => 'caption can not be empty'
     ],
     'order' => [
       'regex' => '/^\d+|(auto)$/',
       'message' => 'Order must be a positive number or "auto"'
     ]
+  ];
+}
+
+class HomeIntroductionValidator extends Validator {
+  protected $fields = [
+    'title' => [
+      'regex' => '/^.+$/',
+      'message' => 'title can not be empty'
+    ], 
+    'subtitle' => [
+      'regex' => '/^.+$/',
+      'message' => 'subtitle can not be empty'
+    ],
+    'content' => [
+      'regex' => '/^[\s\S]+$/',
+      'message' => 'Content can not be empty'
+    ]
+  ];
+}
+
+class ServiceValidator extends Validator {
+  protected $fields = [
+    'title' => [
+      'regex' => '/^.+$/',
+      'message' => 'title can not be empty'
+    ], 
+    'subtitle' => [
+      'regex' => '/^.+$/',
+      'message' => 'subtitle can not be empty'
+    ],
+    'content' => [
+      'regex' => '/^[\s\S]+$/',
+      'message' => 'Content can not be empty'
+    ]
+  ];
+}
+
+class TeamMemberValidator extends Validator {
+  protected $fields = [
+    'fullname' => [
+      'regex' => '/^[A-Za-z ]{1,50}$/',
+      'message' => 'fullname must be alphabetic (a-z or A-Z).'
+    ], 
+    'role' => [
+      'regex' => '/^.+$/',
+      'message' => 'role can not be empty'
+    ],
+    'description' => [
+      'regex' => '/^[\s\S]+$/',
+      'message' => 'description can not be empty'
+    ],
+    'facebook' => [
+      'regex' => '/^[A-Za-z0-9\-\.\:\/\_]*facebook.com[A-Za-z0-9\-\.\:\/\_]*$/',
+      'message' => 'please enter a valid facebook url'
+    ],
+    'twitter' => [
+      'regex' => '/^[A-Za-z0-9\-\.\:\/\_]*twitter.com[A-Za-z0-9\-\.\:\/\_]*$/',
+      'message' => 'please enter a valid twitter url'
+    ],
+    'linkedin' => [
+      'regex' => '/^[A-Za-z0-9\-\.\:\/\_]*linkedin.com[A-Za-z0-9\-\.\:\/\_]*$/',
+      'message' => 'please enter a valid linkedin url'
+    ],
   ];
 }

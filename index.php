@@ -1,47 +1,20 @@
 <?php require 'lib/db.php';
 $currentPage = 'index.php' ?>
-<?php
-$rows = $db->getData("SELECT * FROM home_slideshow ORDER BY img_order;");
-?>
 <?php require 'components/header.php'; ?>
 <link rel="stylesheet" href="css/index.css">
 <title>Home</title>
 <?php require 'components/navigation.php'; ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">Start Bootstrap</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services.php">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="our-work.php">Our work</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <header>
+  <?php
+  $images = $db->getData("SELECT * FROM home_slideshow ORDER BY img_order;");
+  ?>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000">
     <ol class="carousel-indicators">
       <?php
-      if ($rows !== 0) {
-        foreach ($rows as $i => $row) {
-          $imgUrl = substr($row['img_url'], 1);
+      if ($images !== 0) {
+        foreach ($images as $i => $img) {
+          $imgUrl = substr($img['img_url'], 1);
           $active = $i === 0 ? 'active' : '';
           echo "
             <li data-target='#carouselExampleIndicators' data-slide-to='$i' class='$active'></li>
@@ -52,15 +25,15 @@ $rows = $db->getData("SELECT * FROM home_slideshow ORDER BY img_order;");
     </ol>
     <div class="carousel-inner" role="listbox">
       <?php
-      if ($rows !== 0) {
-        foreach ($rows as $i => $row) {
-          $imgUrl = substr($row['img_url'], 1);
+      if ($images !== 0) {
+        foreach ($images as $i => $img) {
+          $imgUrl = substr($img['img_url'], 1);
           $active = $i === 0 ? 'active' : '';
           echo "
             <div class='carousel-item $active' style='background-image: url($imgUrl)'>
               <div class='carousel-caption d-none d-md-block'>
-                <h2 class='display-4'>$row[title]</h2>
-                <p class='lead'>$row[caption]</p>
+                <h2 class='display-4 text-capitalize'>$img[title]</h2>
+                <p class='lead'>$img[caption]</p>
               </div>
             </div>
           ";
@@ -79,12 +52,43 @@ $rows = $db->getData("SELECT * FROM home_slideshow ORDER BY img_order;");
   </div>
 </header>
 
+<main>
 <!-- Page Content -->
-<section class="py-5">
-  <div class="container">
-    <h1 class="display-4">Full Page Image Slider</h1>
-    <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>, taken by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>!</p>
-  </div>
-</section>
+<?php
+$rows = $db->getData("SELECT * FROM home_introduction;");
+
+if ($rows !== 0) {
+  foreach ($rows as $i => $row) {
+    $order = $i % 2 === 0 ? '1' : '0';
+
+    if ($row['img_url'] !== null) {
+      $imgUrl = substr($row['img_url'], 1);
+      $content = "
+        <div class='col-lg-6 order-$order'>
+          <img src='$imgUrl' alt='Image' class='img-fluid intro-img'>
+        </div>
+        <div class='col-lg-6'>$row[content]</div>
+      ";
+    } else {
+      $content = "<div class='col'>$row[content]</div>";
+    }
+
+    echo "
+      <section class='py-5'>
+        <div class='container'>
+          <h2 class='text-center text-capitalize'>$row[title]</h2>
+          <h4 class='px-5 py-4 font-weight-normal text-center mb-4'>$row[subtitle]</h4>
+          <div class='row'>
+            $content
+          </div>
+        </div>
+      </section>
+    ";
+  }
+}
+?>
+</main>
 
 <?php require 'components/footer.php'; ?>
+
+

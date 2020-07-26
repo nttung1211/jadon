@@ -18,7 +18,10 @@ if ($_FILES['upload']['name']) {
   $errors['upload'] = 'Please choose an image.';
 }
 
-if (count($errors)) goto end;
+if (count($errors)) {
+  $errors['upload'] = 'Please choose an image.';
+  goto end;
+} 
 
 /* prepare the image order */
 $rows = $db->getData('SELECT * FROM home_slideshow ORDER BY img_order DESC LIMIT 1;');
@@ -65,12 +68,13 @@ end:
 
 <?php include './components/header.php'; ?>
 
-<script src="./js/home.slideshow.add.js" type="module" defer></script>
+<script src="./js/shared/displayUploadImage.js" type="module" defer></script>
 <title>Add slideshow image</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
+  <a class="btn btn-primary mt-4 px-4" href="index.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
   <div class="row">
     <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
       <h2 class="my-4">Add image</h2>
@@ -113,7 +117,7 @@ end:
 
         <div class="form-group">
           <label for="caption">caption:</label>
-          <textarea type="text" name="caption" id="caption" class="form-control" value="<?php echo htmlspecialchars($_POST['caption'] ?? ''); ?>"></textarea>
+          <textarea type="text" name="caption" id="caption" class="form-control"><?php echo htmlspecialchars($_POST['caption'] ?? ''); ?></textarea>
         </div>
 
         <?php
@@ -141,8 +145,7 @@ end:
         }
         ?>
 
-        <button class="btn btn-success btn-block mt-2 py-2 mb-1" name="submit">Save</button>
-        <a class="btn btn-primary btn-block mt-2 py-2 mb-5" href="index.php">Back</a>
+        <button class="btn btn-success btn-block mt-4 py-2 mb-5" name="submit">Save</button>
       </form>
     </div>
   </div>

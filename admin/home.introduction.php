@@ -4,55 +4,36 @@ $currentPage = 'home.introduction.php'; ?>
 
 <?php include './components/header.php'; ?>
 
-<link rel="stylesheet" href="css/index.css">
+<!-- dataTable -->
 <link rel="stylesheet" href="../lib/css/dataTables.bootstrap4.min.css">
 <script src="../lib/js/jquery.dataTables.min.js" defer></script>
 <script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
-<script src="js/index.js" type="module" defer></script>
-<title>Home</title>
+
+<script src="js/home.introduction.js" type="module" defer></script>
+
+<title>Introduction</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
   <div class="row">
     <div class="col-sm-12 mt-4">
-      <div class="card rounded shadow-sm border-0">
-        <div class="card-body p-5 bg-white rounded">
+      <a class="btn btn-success px-5" href="home.introduction.add.php">Add</a>
+      <div class="card rounded shadow-sm border-0 mt-4">
+        <div class="card-body p-4 bg-white rounded">
           <div class="table-responsive">
-            <table id="example" style="width:100%" class="table table-striped table-bordered">
+            <table id="table" style="width:100%" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th>Image</th>
                   <th>Title</th>
-                  <th>Caption</th>
-                  <th>Order</th>
+                  <th>Subtitle</th>
+                  <th>Content</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                </tr>
-                <tr>
-                  <td>Ashton Cox</td>
-                  <td>Junior Technical Author</td>
-                  <td>San Francisco</td>
-                  <td>66</td>
-                </tr>
-                <tr>
-                  <td>Cedric Kelly</td>
-                  <td>Senior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                </tr>
+              <tbody id="item-container">
+                
               </tbody>
             </table>
           </div>

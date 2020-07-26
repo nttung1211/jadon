@@ -37,9 +37,9 @@ if (isset($_POST['submit'])) {
       $db->alterData("UPDATE managers SET password = ? WHERE email = ?", [$newPassword_hash, $_POST['email']]);
 
       /* send email */
-      require '../lib/PHPMailer/Exception.php';
-      require '../lib/PHPMailer/PHPMailer.php';
-      require '../lib/PHPMailer/SMTP.php';
+      require '../lib/vendor/PHPMailer/Exception.php';
+      require '../lib/vendor/PHPMailer/PHPMailer.php';
+      require '../lib/vendor/PHPMailer/SMTP.php';
 
       $mail = new PHPMailer(true);
 

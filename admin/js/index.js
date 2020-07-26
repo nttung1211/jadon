@@ -1,54 +1,52 @@
-import {
-  getData,
-  alterData
-} from '../../lib/js/functions.async.js';
+import { fetchData } from '../../lib/js/functions.async.js';
 
 
 window.addEventListener('load', async () => {
   await renderImages();
-  // $('#slideshowTable').DataTable();
-  $('#slideshowTable').DataTable({
+  // $('#table').DataTable();
+  $('#table').DataTable({
     "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]] //* just one time
   });
 })
 // https://datatables.net/examples/advanced_init/length_menu.html
 
-const imageContainer = document.querySelector('#image-container');
+const itemContainer = document.querySelector('#item-container');
 
-imageContainer.addEventListener('click', (e) => {
+itemContainer.addEventListener('click', (e) => {
   if (e.target.matches('#deleteBtn')) {
     document.querySelector('#confirmDelete .btn-danger').addEventListener('click', async () => {
-      await alterData('../lib/delete-file.php', { fileName: e.target.dataset.imgUrl })
-      await alterData('home.slideshow.delete.php', { id: `${e.target.dataset.id}` });
+      await fetchData('../lib/delete-file.php', { fileName: e.target.dataset.imgUrl })
+      await fetchData('cms.delete-data.php', { id: e.target.dataset.id, table: 'home_slideshow' });
       e.target.parentNode.parentNode.remove();
     }, { once: true });
   }
 })
 
 async function renderImages() {
-  imageContainer.innerHTML = '';
-  const images = await getData('../home.slideshow.get.php');
+  itemContainer.innerHTML = '';
+  const response = await fetchData('cms.get-data.php', { table: 'home_slideshow'});
+  const items = response.rows;
 
-  if (images) {
-    images.forEach(img => {
-      const shortTitle = img.title.length > 20 ? img.title.slice(0, 18) + "..." : img.title;
-      const shortCaption = img.caption.length > 20 ? img.caption.slice(0, 18) + "..." : img.caption;
+  if (items) {
+    items.forEach(item => {
+      const shortTitle = item.title.length > 20 ? item.title.slice(0, 18) + "..." : item.title;
+      const shortCaption = item.caption.length > 20 ? item.caption.slice(0, 18) + "..." : item.caption;
       const html = `
         <tr>
           <td>
-            <img src="${img.img_url}" alt="Image">
+            <img src="${item.img_url}" alt="Image">
           </td>
           <td>${shortTitle}</td>
           <td>${shortCaption}</td>
-          <td>${img.img_order}</td>
+          <td>${item.img_order}</td>
           <td>
-            <a class="btn btn-primary" href="home.slideshow.edit.php?id=${img.id}">Edit</a>
-            <a id="deleteBtn" class="btn btn-danger text-white" data-id="${img.id}" data-img-url="${img.img_url}" data-toggle="modal" data-target="#confirmDelete">Delete</a>
+            <a class="btn btn-primary" href="home.slideshow.edit.php?id=${item.id}">Edit</a>
+            <a id="deleteBtn" class="btn btn-danger text-white" data-id="${item.id}" data-img-url="${item.img_url}" data-toggle="modal" data-target="#confirmDelete">Delete</a>
           </td>
         </tr>
       `;
 
-      imageContainer.innerHTML += html;
+      itemContainer.innerHTML += html;
     });
   }
 }

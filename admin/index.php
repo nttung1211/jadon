@@ -1,13 +1,13 @@
 <?php include '../lib/db.php';
 $currentPage = 'index.php'; ?>
 <?php include 'cms.check-logged-in.php'; ?>
-
 <?php include './components/header.php'; ?>
 
-<link rel="stylesheet" href="css/index.css">
+<!-- dataTable -->
 <link rel="stylesheet" href="../lib/css/dataTables.bootstrap4.min.css">
 <script src="../lib/js/jquery.dataTables.min.js" defer></script>
 <script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
+
 <script src="js/index.js" type="module" defer></script>
 <title>Home</title>
 
@@ -20,7 +20,7 @@ $currentPage = 'index.php'; ?>
       <div class="card rounded shadow-sm border-0 mt-4">
         <div class="card-body p-4 bg-white rounded">
           <div class="table-responsive">
-            <table id="slideshowTable" style="width:100%" class="table table-striped table-bordered">
+            <table id="table" style="width:100%" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th>Image</th>
@@ -30,7 +30,7 @@ $currentPage = 'index.php'; ?>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody id="image-container">
+              <tbody id="item-container">
                 
               </tbody>
             </table>

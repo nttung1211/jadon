@@ -10,7 +10,7 @@ if ($rows === 0) {
   exit('This image does not exist.');
 }
 
-$image = $rows[0];
+$currentImage = $rows[0];
 
 if (!isset($_POST['submit'])) goto end;
 
@@ -36,7 +36,7 @@ if ($_FILES['upload']['name']) {
       caption = ?,
       img_order = ?
     WHERE
-      id = '$image[id]';
+      id = '$currentImage[id]';
   ";
 
 } else {
@@ -50,17 +50,17 @@ if ($_FILES['upload']['name']) {
       caption = ?,
       img_order = ?
     WHERE
-      id = '$image[id]';
+      id = '$currentImage[id]';
   ";
 }
 
 /* prepare the image order */
-$imgOrder = $image['img_order'];
+$imgOrder = $currentImage['img_order'];
 
-if ($_POST['order'] !== "auto" && $_POST['order'] !== $image['img_order']) {
+if ($_POST['order'] !== "auto" && $_POST['order'] !== $currentImage['img_order']) {
 
   if ($db->getData('SELECT * FROM home_slideshow WHERE img_order = ?;', [$_POST['order']]) !== 0) {
-    $db->alterData("UPDATE home_slideshow SET img_order = ? WHERE img_order = ?", [$image['img_order'], $_POST['order']]);
+    $db->alterData("UPDATE home_slideshow SET img_order = ? WHERE img_order = ?", [$currentImage['img_order'], $_POST['order']]);
   }
 
   $imgOrder = $_POST['order'];
@@ -75,7 +75,7 @@ $db->alterData($query, $params);
 if ($saveUrl) {
   if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
     exit('An error occur while writting new file to server.');
-  } elseif (!unlink($image['img_url'])) {
+  } elseif (!unlink($currentImage['img_url'])) {
     exit('An error occur while delete old file form server.');
   }
 }
@@ -88,23 +88,24 @@ end:
 
 <?php include './components/header.php'; ?>
 
-<script src="./js/home.slideshow.add.js" type="module" defer></script>
+<script src="./js/shared/displayUploadImage.js" type="module" defer></script>
 <title>Edit slideshow image</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
+  <a class="btn btn-primary mt-4 px-4" href="index.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
   <div class="row">
     <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
       <h2 class="my-4">Edit image</h2>
 
-      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $image['id'] ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $currentImage['id'] ?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group my-4">
           <div class="image-area mb-2">
             <?php
-            if (!empty($image['img_url'])) {
-              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$image[img_url]' alt='image'>";
+            if (!empty($currentImage['img_url'])) {
+              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$currentImage[img_url]' alt='image'>";
             }
             ?>
           </div>
@@ -127,7 +128,7 @@ end:
 
         <div class="form-group">
           <label for="title">title:</label>
-          <input type="text" name="title" id="title" class="form-control" value="<?php echo htmlspecialchars($_POST['title'] ?? $image['title']); ?>">
+          <input type="text" name="title" id="title" class="form-control" value="<?php echo htmlspecialchars($_POST['title'] ?? $currentImage['title']); ?>">
         </div>
 
         <?php
@@ -142,7 +143,7 @@ end:
 
         <div class="form-group">
           <label for="caption">caption:</label>
-          <textarea type="text" name="caption" id="caption" class="form-control"><?php echo htmlspecialchars($_POST['caption'] ?? $image['caption']); ?></textarea>
+          <textarea type="text" name="caption" id="caption" class="form-control"><?php echo htmlspecialchars($_POST['caption'] ?? $currentImage['caption']); ?></textarea>
         </div>
 
         <?php
@@ -157,7 +158,7 @@ end:
 
         <div class="form-group">
           <label for="order">order:</label>
-          <input type="text" name="order" id="order" class="form-control" value="<?php echo htmlspecialchars($_POST['order'] ?? $image['img_order']); ?>">
+          <input type="text" name="order" id="order" class="form-control" value="<?php echo htmlspecialchars($_POST['order'] ?? $currentImage['img_order']); ?>">
           <small>Note: auto is equivalent to stay unchanged</small>
         </div>
 
@@ -171,8 +172,7 @@ end:
         }
         ?>
 
-        <button class="btn btn-success btn-block mt-2 py-2 mb-1" name="submit">Save</button>
-        <a class="btn btn-primary btn-block mt-2 py-2 mb-5" href="index.php">Back</a>
+        <button class="btn btn-success btn-block mt-4 py-2 mb-5" name="submit">Save</button>
       </form>
     </div>
   </div>

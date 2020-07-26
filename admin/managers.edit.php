@@ -10,7 +10,7 @@ if ($rows === 0) {
   exit('This manager does not exist.');
 }
 
-$manager = $rows[0];
+$currentManager = $rows[0];
 
 /* check if there was a post */
 if (!isset($_POST['submit'])) goto end;
@@ -20,7 +20,7 @@ require '../lib/validator.class.php';
 $validation = new ManagerValidator($_POST);
 $errors = $validation->validateForm();
 
-if ($_POST['password'] === $manager['password']) {
+if ($_POST['password'] === $currentManager['password']) {
   unset($errors['password']);
 }
 
@@ -29,7 +29,7 @@ if (count($errors)) goto end;
 /* check if username already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE username = ?;", [$_POST['username']]);
 
-if ($rows !== 0 && $rows[0]['username'] !== $manager['username']) {
+if ($rows !== 0 && $rows[0]['username'] !== $currentManager['username']) {
   $errors['username'] = 'This username has been taken.';
   goto end;
 }
@@ -37,13 +37,13 @@ if ($rows !== 0 && $rows[0]['username'] !== $manager['username']) {
 /* check if email already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE email = ?;", [$_POST['email']]);
 
-if ($rows !== 0 && $rows[0]['email'] !== $manager['email']) {
+if ($rows !== 0 && $rows[0]['email'] !== $currentManager['email']) {
   $errors['email'] = 'This email has been used.';
   goto end;
 }
 
 /* if the being edited account is super-admin then the level can not be changed */
-$level = $manager['level'] === 'super-admin' ? 'super-admin' : $_POST['level'];
+$level = $currentManager['level'] === 'super-admin' ? 'super-admin' : $_POST['level'];
 
 /* hash password */
 $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -72,18 +72,18 @@ if ($_FILES['upload']['name']) {
       $_POST['email'],
       $level,
       $readUrl,
-      $manager['id']
+      $currentManager['id']
     ]
   );
 
   /* update image in server folder */
   if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
     exit('An error occur while writting new file to server.');
-  } elseif (!unlink($manager['img_url'])) {
+  } elseif (!unlink($currentManager['img_url'])) {
     exit('An error occur while delete old file form server.');
   }
 
-  if ($_SESSION['jadon_loggedIn']['id'] === $manager['id']) {
+  if ($_SESSION['jadon_loggedIn']['id'] === $currentManager['id']) {
     $_SESSION['jadon_loggedIn']['img_url'] = $readUrl;
   }
 
@@ -106,7 +106,7 @@ if ($_FILES['upload']['name']) {
       $password_hash,
       $_POST['email'],
       $level,
-      $manager['id']
+      $currentManager['id']
     ]
   );
 }
@@ -119,20 +119,21 @@ end:
 
 <?php include './components/header.php'; ?>
 
-<script src="./js/managers.edit.js" type="module" defer></script>
+<script src="./js/shared/displayUploadImage.js" type="module" defer></script>
 <title>Edit manager</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
+  <a class="btn btn-primary mt-4 px-4" href="managers.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
   <div class="row">
     <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
       <h2 class="my-4">Edit manager</h2>
 
-      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $manager['id'] ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $currentManager['id'] ?>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="fullname">Fullname:</label>
-          <input type="text" name="fullname" id="fullname" class="form-control" value="<?php echo htmlspecialchars($_POST['fullname'] ?? $manager['fullname']); ?>">
+          <input type="text" name="fullname" id="fullname" class="form-control" value="<?php echo htmlspecialchars($_POST['fullname'] ?? $currentManager['fullname']); ?>">
         </div>
 
         <?php
@@ -147,7 +148,7 @@ end:
 
         <div class="form-group">
           <label for="username">Username:</label>
-          <input type="text" name="username" id="username" class="form-control" value="<?php echo htmlspecialchars($_POST['username'] ?? $manager['username']); ?>">
+          <input type="text" name="username" id="username" class="form-control" value="<?php echo htmlspecialchars($_POST['username'] ?? $currentManager['username']); ?>">
         </div>
 
         <?php
@@ -162,7 +163,7 @@ end:
 
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? $manager['password']); ?>">
+          <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? $currentManager['password']); ?>">
         </div>
 
         <?php
@@ -177,7 +178,7 @@ end:
 
         <div class="form-group">
           <label for="email">Email:</label>
-          <input type="text" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? $manager['email']); ?>">
+          <input type="text" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? $currentManager['email']); ?>">
         </div>
 
         <?php
@@ -190,14 +191,14 @@ end:
         }
         ?>
 
-        <?php if ($manager['level'] !== 'super-admin') { ?>
+        <?php if ($currentManager['level'] !== 'super-admin') { ?>
           <div class="form-group">
             <label for="level">Level:</label>
             <select name="level" id="level" class="custom-select">
-              <option <?php echo (isset($_POST['level']) && ($_POST['level'] === 'manager')) || $manager['level'] === 'manager' ? 'selected' : ''; ?> value="manager">Manager</option>
+              <option <?php echo (isset($_POST['level']) && ($_POST['level'] === 'manager')) || $currentManager['level'] === 'manager' ? 'selected' : ''; ?> value="manager">Manager</option>
               <?php
               if ($_SESSION['jadon_loggedIn']['level'] === 'super-admin') {
-                $selected = (isset($_POST['level']) && ($_POST['level'] === 'admin')) || $manager['level'] === 'admin' ? 'selected' : '';
+                $selected = (isset($_POST['level']) && ($_POST['level'] === 'admin')) || $currentManager['level'] === 'admin' ? 'selected' : '';
                 echo "<option $selected value='admin'>Admin</option>";
               };
               ?>
@@ -209,8 +210,8 @@ end:
           <div class="image-area mb-2">
 
             <?php
-            if (!empty($manager['img_url'])) {
-              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$manager[img_url]' alt='image'>";
+            if (!empty($currentManager['img_url'])) {
+              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$currentManager[img_url]' alt='image'>";
             }
             ?>
 
@@ -222,8 +223,7 @@ end:
           </label>
         </div>
 
-        <button class="btn btn-success btn-block mt-2 py-2 mb-1" name="submit">Save changes</button>
-        <a class="btn btn-primary btn-block mt-2 py-2 mb-5" href="managers.php">Back</a>
+        <button class="btn btn-success btn-block mt-4 py-2 mb-5" name="submit">Save changes</button>
       </form>
     </div>
   </div>

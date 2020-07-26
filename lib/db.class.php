@@ -28,7 +28,7 @@ class DB {
       exit('Failed to prepare query:' . $this->con->error);
     } 
 
-    if ($params) {
+    if ($params && count($params) != 0) {
       $typeString = '';
       
       foreach ($params as $p) {
@@ -67,7 +67,7 @@ class DB {
       exit('Failed to prepare query.' . $this->con->error);
     }
     
-    if ($params) {
+    if ($params && count($params) !== 0) {
       $typeString = '';
       
       foreach ($params as $p) {

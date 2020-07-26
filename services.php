@@ -1,26 +1,33 @@
 <?php require 'lib/db.php';
 $currentPage = 'services.php' ?>
-<?php
-$rows = $db->getData("SELECT * FROM services ORDER BY created_at DESC;");
-?>
 <?php require 'components/header.php'; ?>
 <link rel="stylesheet" href="css/services.css">
 <title>Services</title>
 <?php require 'components/navigation.php'; ?>
 
-<div class="container sercives-container">
+<div class="container outmost-container">
   <div class="row">
   <?php 
+  if (isset($_GET['category_id'])) {
+    $rows = $db->getData("SELECT * FROM services WHERE category_id = ? ORDER BY created_at DESC;", [$_GET['category_id']]);
+  } else {
+    $rows = $db->getData("SELECT * FROM services;");
+  }
+
+
   if ($rows !== 0) {
     foreach ($rows as $row) {
+      $imgUrl = substr($row['img_url'], 1);
+      $shortSubtitle = strlen($row['subtitle']) > 140 ? substr($row['subtitle'], 0, 137) . '...' : $row['subtitle'];
+
       echo "
-        <div class='col-md-6'>
+        <div class='col-10 col-md-6 mx-auto mb-4'>
           <div class='card border-0 shadow-sm'>
-            <img src='$row[img_url]' class='card-img-top' alt='...'>
+            <img src='$imgUrl' class='card-img-top' alt='image'>
             <div class='card-body text-center'>
-              <h5 class='card-title mb-0'>$row[title]</h5>
-              <div class='card-text text-black-50'>$row[subtitle]</div>
-              <a class='text-primary stretched-link mt-4' data-id='$row[id]'>See details</a>
+              <h2 class='card-title mb-3 text-capitalize'>$row[title]</h2>
+              <div class='card-text text-black-50 long-content'>$shortSubtitle</div>
+              <a class='text-primary stretched-link mt-3 d-block' href='service-detail.php?id=$row[id]'>See details</a>
             </div>
           </div>
         </div>

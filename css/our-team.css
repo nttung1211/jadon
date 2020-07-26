@@ -1,0 +1,41 @@
+body {
+  background: #FAFAFA;
+}
+
+.long-content {
+  max-height: 6rem;
+  min-height: 6rem;
+  overflow: hidden;
+  transition: .2s ease-out;
+}
+
+.long-content .more {
+  transition: .1s ease-out;
+  opacity: 0;
+}
+
+.long-content.show {
+  transition: .8s ease-out;
+  max-height: 20rem;
+}
+
+.long-content.show .dots {
+  display: none;
+}
+
+.long-content.show .more {
+  opacity: 1;
+}
+
+.show-more-place-holder {
+  height: 40px;
+}
+
+.show-more .fas {
+  font-size: .85rem;
+  transition: .8s;
+}
+
+.long-content.show + .show-more .fas {
+  transform: rotateX(180deg) translateY(15%);
+}

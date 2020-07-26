@@ -1,3 +1,7 @@
-.sercives-container {
-  margin-top: 100px;
+body {
+  background: #FAFAFA;
+}
+
+.long-content {
+  height: 6rem;
 }
