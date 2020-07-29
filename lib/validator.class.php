@@ -161,3 +161,24 @@ class TeamMemberValidator extends Validator {
     ],
   ];
 }
+
+class EventValidator extends Validator {
+  protected $fields = [
+    'title' => [
+      'regex' => '/^.+$/',
+      'message' => 'title can not be empty'
+    ], 
+    'subtitle' => [
+      'regex' => '/^.+$/',
+      'message' => 'subtitle can not be empty'
+    ],
+    'description' => [
+      'regex' => '/^[\s\S]+$/',
+      'message' => 'Description can not be empty'
+    ],
+    'event_date' => [
+      'regex' => '/^[0-9]{2,4}[\/-][0-9]{1,2}[\/-][0-9]{1,2}$/',
+      'message' => 'Please enter a valid date (dd/mm/yyyy)'
+    ]
+  ];
+}

@@ -44,10 +44,10 @@ CREATE TABLE `clients` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Table structure for table `event_comments`
 --
 
-CREATE TABLE `comments` (
+CREATE TABLE `event_comments` (
   `id` int(11) NOT NULL,
   `parent_comment_id` int(11) DEFAULT NULL,
   `comment_text` text NOT NULL,
@@ -68,16 +68,16 @@ CREATE TABLE `events` (
   `title` varchar(100) NOT NULL,
   `subtitle` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  `event_date` datetime DEFAULT current_timestamp()
+  `event_date` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_photos`
+-- Table structure for table `event_images`
 --
 
-CREATE TABLE `event_photos` (
+CREATE TABLE `event_images` (
   `id` int(11) NOT NULL,
   `img_url` text NOT NULL,
   `event_id` int(11) NOT NULL
@@ -137,10 +137,10 @@ INSERT INTO `home_slideshow` (`id`, `img_url`, `title`, `caption`, `img_order`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
+-- Table structure for table `event_likes`
 --
 
-CREATE TABLE `likes` (
+CREATE TABLE `event_likes` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
@@ -277,9 +277,9 @@ ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `comments`
+-- Indexes for table `event_comments`
 --
-ALTER TABLE `comments`
+ALTER TABLE `event_comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `event_id` (`event_id`);
@@ -291,9 +291,9 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `event_photos`
+-- Indexes for table `event_images`
 --
-ALTER TABLE `event_photos`
+ALTER TABLE `event_images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `event_id` (`event_id`);
 
@@ -310,9 +310,9 @@ ALTER TABLE `home_slideshow`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `likes`
+-- Indexes for table `event_likes`
 --
-ALTER TABLE `likes`
+ALTER TABLE `event_likes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `event_id` (`event_id`);
@@ -359,9 +359,9 @@ ALTER TABLE `clients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT for table `event_comments`
 --
-ALTER TABLE `comments`
+ALTER TABLE `event_comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -371,9 +371,9 @@ ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `event_photos`
+-- AUTO_INCREMENT for table `event_images`
 --
-ALTER TABLE `event_photos`
+ALTER TABLE `event_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -389,9 +389,9 @@ ALTER TABLE `home_slideshow`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `likes`
+-- AUTO_INCREMENT for table `event_likes`
 --
-ALTER TABLE `likes`
+ALTER TABLE `event_likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -429,24 +429,24 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `comments`
+-- Constraints for table `event_comments`
 --
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
+ALTER TABLE `event_comments`
+  ADD CONSTRAINT `event_comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `event_comments_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
 
 --
--- Constraints for table `event_photos`
+-- Constraints for table `event_images`
 --
-ALTER TABLE `event_photos`
-  ADD CONSTRAINT `event_photos_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
+ALTER TABLE `event_images`
+  ADD CONSTRAINT `event_images_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
 
 --
--- Constraints for table `likes`
+-- Constraints for table `event_likes`
 --
-ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
+ALTER TABLE `event_likes`
+  ADD CONSTRAINT `event_likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `event_likes_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
 
 --
 -- Constraints for table `services`
