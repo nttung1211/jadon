@@ -184,15 +184,24 @@ label {
   font-size: 1.2rem;
 }
 
-table img {
+#table img {
   width: 80px;
   height: 60px;
   object-fit: cover;
 }
 
+#table tr td {
+  min-width: 90px;
+}
+
 #table tr td:last-child {
   min-width: 131px;
   max-width: 131px;
+}
+
+#table .date {
+  font-size: .9rem;
+  font-style: italic;
 }
 
 /* ********************************************* */

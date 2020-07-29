@@ -1,5 +1,10 @@
 <?php include '../lib/db.php';
-$currentPage = 'our-work.php'; ?>
+$currentPage = 'our-work.php'; 
+
+$rows = $db->getData("SELECT event_id FROM event_comments WHERE id = ?", [$_GET['id']]);
+$event_id = $rows[0]['event_id'];
+
+?>
 <?php include 'cms.check-logged-in.php'; ?>
 <?php include './components/header.php'; ?>
 
@@ -8,28 +13,25 @@ $currentPage = 'our-work.php'; ?>
 <script src="../lib/js/jquery.dataTables.min.js" defer></script>
 <script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
 
-<script src="js/our-work.js" type="module" defer></script>
+<script src="js/our-work.comments.replies.js" type="module" defer></script>
 
-<title>Our Work</title>
+<title>Our Work replies</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
   <div class="row">
     <div class="col-sm-12 mt-4">
-      <a class="btn btn-success px-5" href="our-work.add.php">Add</a>
+      <a class="btn btn-primary my-2 px-2 px-4" href="our-work.comments.php?id=<?php echo $event_id ?>"><i class="fas fa-chevron-left mr-2"></i>Back</a>
       <div class="card rounded shadow-sm border-0 mt-4">
         <div class="card-body p-4 bg-white rounded">
           <div class="table-responsive">
             <table id="table" style="width:100%" class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Thumbnail</th>
-                  <th>Title</th>
+                  <th>Username</th>
+                  <th>Reply</th>
                   <th>Date</th>
-                  <th>Images</th>
-                  <th>Comments</th>
-                  <th>Likes</th>
                   <th>Action</th>
                 </tr>
               </thead>

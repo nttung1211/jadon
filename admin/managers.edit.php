@@ -76,12 +76,16 @@ if ($_FILES['upload']['name']) {
     ]
   );
 
-  /* update image in server folder */
+  /* update image to server folder */
   if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
     exit('An error occur while writting new file to server.');
-  } elseif (!unlink($currentManager['img_url'])) {
-    exit('An error occur while delete old file form server.');
   }
+  
+  if ($currentManager['img_url']) {
+    if (!unlink($currentManager['img_url'])) {
+      exit('An error occur while delete old file form server.');
+    } 
+  } 
 
   if ($_SESSION['jadon_loggedIn']['id'] === $currentManager['id']) {
     $_SESSION['jadon_loggedIn']['img_url'] = $readUrl;
