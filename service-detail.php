@@ -60,7 +60,7 @@ if ($relatedServices !== 0 && count($relatedServices) > 1) {
 
           if ($row['id'] !== $service['id']) {
             $imgUrl = substr($row['img_url'], 1);
-            $shortSubtitle = strlen($row['subtitle']) > 140 ? substr($row['subtitle'], 0, 137) . '...' : $row['subtitle'];
+            $shortSubtitle = strlen($row['subtitle']) > 110 ? substr($row['subtitle'], 0, 107) . '...' : $row['subtitle'];
             echo "
               <div class='col-10 col-sm-8 col-md-6 col-lg-4 mx-auto mb-4'>
                 <div class='card border-0 shadow-sm'>

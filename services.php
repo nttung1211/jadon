@@ -21,7 +21,7 @@ $currentPage = 'services.php' ?>
       $shortSubtitle = strlen($row['subtitle']) > 140 ? substr($row['subtitle'], 0, 137) . '...' : $row['subtitle'];
 
       echo "
-        <div class='col-10 col-md-6 mx-auto mb-4'>
+        <div class='col-sm-10 col-md-6 mx-auto mb-4'>
           <div class='card border-0 shadow-sm'>
             <img src='$imgUrl' class='card-img-top' alt='image'>
             <div class='card-body text-center'>

@@ -1,5 +1,24 @@
 tinymce.init({
   selector: '#content',
+  setup: function (editor) {
+    editor.on('init', function (e) {
+      const contentContainer = document.querySelector('#contenContainer');
+
+      if (contentContainer) {
+        let content = contentContainer.innerHTML;
+        const replacements = {
+          '&lt;': '<' ,
+          '&gt;': '>' ,
+          '&amp;': '&' 
+        }
+        const regex = new RegExp(Object.keys(replacements).join('|'), 'gi');
+        content = content.replace(regex, match => replacements[match]);
+        editor.setContent(content);
+      }
+      
+    });
+  },
+  //https://stackoverflow.com/questions/37824335/slow-bad-performance-on-chrome-with-large-amount-of-html
   toolbar: 'undo redo | image code',
   plugins: 'preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
   imagetools_cors_hosts: ['picsum.photos'],
@@ -20,20 +39,16 @@ tinymce.init({
   ],
   image_class_list: [
     { title: 'None', value: '' },
+    { title: 'Responsive', value: 'img-fluid' }
   ],
   importcss_append: true,
   templates: [
-    { 
-      title: '2 column layout', 
-      description: 'creates 2 column of content', 
-      content: '<div class="col-lg-6">column 1</div><div class="col-lg-6">column 2</div>' 
-    }
   ],
   template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
   template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
   height: 600,
   image_caption: true,
-  quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+  quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable | fontselect fontsizeselect formatselect',
   noneditable_noneditable_class: "mceNonEditable",
   toolbar_mode: 'sliding',
   contextmenu: "link image imagetools table"

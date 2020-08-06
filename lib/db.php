@@ -12,17 +12,13 @@ $db = new DB(
 
 /* FUNCTIONS */
 
-function uploadFiles($files, $savePath, $readPath, $table) {
+function uploadFiles($files, $savePath, $readPath, $query, $params) {
   global $db;
-  $query = "
-    INSERT INTO 
-      $table
-    SET 
-      img_url = ?;
-  ";
-  //+ is_uploaded_file();
 
   foreach ($files['tmp_name'] as $i => $tmp_name) {
+    // check whether the specified file uploaded via HTTP POST or not
+    if (!is_uploaded_file($tmp_name)) continue;
+
     // PREPARE FILE TO WRITE
     ['saveUrl' => $saveUrl, 'readUrl' => $readUrl] = prepareFileUrl($files['name'][$i], $savePath, $readPath);
 
@@ -32,7 +28,7 @@ function uploadFiles($files, $savePath, $readPath, $table) {
     };
 
     // WRITE FILE ULR TO DATABASE
-    $db->alterData($query, [$readUrl]);
+    $db->alterData($query, array_merge([$readUrl], $params));
   }
 
   return 1;

@@ -10,7 +10,7 @@ if ($rows === 0) {
   exit('This manager does not exist.');
 }
 
-$manager = $rows[0];
+$currentManager = $rows[0];
 
 /* check if there was a post */
 if (!isset($_POST['submit'])) goto end;
@@ -30,7 +30,7 @@ $validation->setFields([
 ]);
 $errors = $validation->validateForm();
 
-if ($_POST['password'] === $manager['password']) {
+if ($_POST['password'] === $currentManager['password']) {
   unset($errors['password']);
 }
 
@@ -39,13 +39,13 @@ if (count($errors)) goto end;
 /* check if email already exists */
 $rows = $db->getData("SELECT * FROM managers WHERE email = ?;", [$_POST['email']]);
 
-if ($rows !== 0 && $rows[0]['email'] !== $manager['email']) {
+if ($rows !== 0 && $rows[0]['email'] !== $currentManager['email']) {
   $errors['email'] = 'This email has been used.';
   goto end;
 }
 
 /* hash password */
-$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$password_hash = $_POST['password'] !== $currentManager['password'] ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $currentManager['password'];
 
 if ($_FILES['upload']['name']) {
   /* prepare image name if there is image uploaded */
@@ -65,18 +65,22 @@ if ($_FILES['upload']['name']) {
       $password_hash,
       $_POST['email'],
       $readUrl,
-      $manager['id']
+      $currentManager['id']
     ]
   );
 
   /* update image in server folder */
   if (!move_uploaded_file($_FILES['upload']['tmp_name'], $saveUrl)) {
     exit('An error occur while writting new file to server.');
-  } elseif (!unlink($manager['img_url'])) {
-    exit('An error occur while delete old file form server.');
   }
+  
+  if ($currentManager['img_url']) {
+    if (!unlink($currentManager['img_url'])) {
+      exit('An error occur while delete old file form server.');
+    } 
+  } 
 
-  if ($_SESSION['jadon_loggedIn']['id'] === $manager['id']) {
+  if ($_SESSION['jadon_loggedIn']['id'] === $currentManager['id']) {
     $_SESSION['jadon_loggedIn']['img_url'] = $readUrl;
   }
 
@@ -93,7 +97,7 @@ if ($_FILES['upload']['name']) {
     [
       $password_hash,
       $_POST['email'],
-      $manager['id']
+      $currentManager['id']
     ]
   );
 }
@@ -116,11 +120,11 @@ end:
     <div class="col-lg-5 col-md-7 col-9 mx-auto mt-4">
       <h2 class="my-4">Manage account</h2>
 
-      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $manager['id'] ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $currentManager['id'] ?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? $manager['password']); ?>">
+          <input type="password" name="password" id="password" class="form-control" value="<?php echo htmlspecialchars($_POST['password'] ?? $currentManager['password']); ?>">
         </div>
 
         <?php
@@ -135,7 +139,7 @@ end:
 
         <div class="form-group">
           <label for="email">Email:</label>
-          <input type="text" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? $manager['email']); ?>">
+          <input type="text" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($_POST['email'] ?? $currentManager['email']); ?>">
         </div>
 
         <?php
@@ -152,8 +156,8 @@ end:
           <div class="image-area mb-2">
 
             <?php
-            if (!empty($manager['img_url'])) {
-              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$manager[img_url]' alt='image'>";
+            if (!empty($currentManager['img_url'])) {
+              echo "<img class='img-fluid rounded shadow-sm mx-auto d-block' src='$currentManager[img_url]' alt='image'>";
             }
             ?>
 

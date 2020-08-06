@@ -1,14 +1,17 @@
 /* dropdown */
-const dropdownToggler = document.querySelector('.dropdown');
-const dropdwonMenu = document.querySelector('.dropdown-menu');
+const dropdownTogglers = document.querySelectorAll('.dropdown');
 
-if (dropdownToggler && dropdwonMenu) {
-  dropdownToggler.addEventListener('mouseover', () => {
-    dropdwonMenu.classList.add('show');
-  })
-
-  dropdownToggler.addEventListener('mouseleave', () => {
-    dropdwonMenu.classList.remove('show');
+if (dropdownTogglers) {
+  dropdownTogglers.forEach(dropdownToggler => {
+    const dropdwonMenu = dropdownToggler.querySelector('.dropdown-menu');
+    
+    dropdownToggler.addEventListener('mouseover', () => {
+      dropdwonMenu.classList.add('show');
+    })
+  
+    dropdownToggler.addEventListener('mouseleave', () => {
+      dropdwonMenu.classList.remove('show');
+    })
   })
 }
 

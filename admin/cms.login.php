@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-lg-5 col-md-7 col-9 rounded" id="formWrapper">
+      <div class="col-lg-5 col-md-7 col-9 rounded shadow-sm" id="formWrapper">
         <?php
           if (isset($_SESSION['success'])) {
             echo "

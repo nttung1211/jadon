@@ -43,9 +43,10 @@ if ($_FILES['upload']['name']) {
   $readUrl = '';
 }
 
-/* write image url to datbase */
+/* hash password */
 $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
+/* write to datbase */
 $db->alterData("
   INSERT INTO 
     managers

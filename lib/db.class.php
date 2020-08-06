@@ -61,27 +61,53 @@ class DB {
     $stmt->close();
   }
 
-  function alterData($query, $params = null) {
-    
-    if (!($stmt = $this->con->prepare($query)))  {
-      exit('Failed to prepare query.' . $this->con->error);
-    }
-    
-    if ($params && count($params) !== 0) {
-      $typeString = '';
-      
-      foreach ($params as $p) {
-        $typeString = $typeString . 's';
+  function alterData($query, $params = null, $getError = false) {
+    if ($getError) {
+
+      if (!($stmt = $this->con->prepare($query)))  {
+        return $this->con->error;
       }
-
-      if (!$stmt->bind_param($typeString, ...$params)) {
-        exit('Failed to bind params.' . $stmt->error);
+      
+      if ($params && count($params) !== 0) {
+        $typeString = '';
+        
+        foreach ($params as $p) {
+          $typeString = $typeString . 's';
+        }
+  
+        if (!$stmt->bind_param($typeString, ...$params)) {
+          return $stmt->error;
+        };
+      }
+  
+      if (!$stmt->execute()) {
+        return $stmt->error;
       };
+
+    } else {
+      
+      if (!($stmt = $this->con->prepare($query)))  {
+        exit('Failed to prepare query.' . $this->con->error);
+      }
+      
+      if ($params && count($params) !== 0) {
+        $typeString = '';
+        
+        foreach ($params as $p) {
+          $typeString = $typeString . 's';
+        }
+  
+        if (!$stmt->bind_param($typeString, ...$params)) {
+          exit('Failed to bind params.' . $stmt->error);
+        };
+      }
+  
+      if (!$stmt->execute()) {
+        exit('Failed to execute query.' . $stmt->error);
+      };
+
     }
 
-    if (!$stmt->execute()) {
-      exit('Failed to execute query.' . $stmt->error);
-    };
 
     $stmt->close();
   }

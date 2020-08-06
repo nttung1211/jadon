@@ -1,3 +1,4 @@
+<?php require 'check-logged-in.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 

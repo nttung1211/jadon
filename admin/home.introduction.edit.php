@@ -153,7 +153,8 @@ end:
 
         <div class="form-group">
           <label for="content">content:</label>
-          <textarea type="text" name="content" id="content" class="form-control"><?php echo htmlspecialchars($_POST['content'] ?? $currentIntroduction['content']); ?></textarea>
+          <textarea type="text" name="content" id="content" class="form-control"></textarea>
+          <div id='contenContainer' class='d-none'><?php echo htmlspecialchars($_POST['content'] ?? $currentIntroduction['content']); ?></div>
         </div>
 
         <?php

@@ -66,6 +66,7 @@ if ($_FILES['upload']['name']) {
       UPDATE 
         events
       SET 
+        category_id = ?,
         title = ?,
         subtitle = ?,
         description = ?,
@@ -74,6 +75,7 @@ if ($_FILES['upload']['name']) {
         id = ?;
     ",
     [
+      $_POST['category_id'],
       $_POST['title'],
       $_POST['subtitle'],
       $_POST['description'],
@@ -94,19 +96,34 @@ end:
 <script src="../lib/vendor/tinymce/tinymce.min.js"></script>
 <script src="./js/shared/displayUploadImage.js" type="module" defer></script>
 <script src="./js/shared/tinymce.init.js" type="module" defer></script>
-<title>Add Service</title>
+<title>Edit event</title>
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
   <div class="row">
     <div class="col-12 mx-auto mt-4">
       <a class="btn btn-primary my-2 px-2 px-4" href="our-work.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
-      <h2 class="my-4">Add a sevice</h2>
+      <h2 class="my-4">Edit event</h2>
 
       <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $currentEvent['id'] ?>" method="post" enctype="multipart/form-data">
 
         <div class="row">
           <div class="col-lg-6 order-lg-0 order-1">
+
+            <div class="form-group mt-3">
+              <label for="category_id">category:</label>
+              <select name="category_id" id="category_id" class='custom-select'>
+                <?php
+                  $categories = $db->getData("SELECT * FROM service_categories;");
+                  foreach ($categories as $cate) {
+                    $selected = htmlspecialchars($_POST['category_id'] ?? $currentEvent['category_id']) == $cate['id'] ? 'selected' : '';
+                    echo "
+                      <option $selected value='$cate[id]'>$cate[name]</option>
+                    ";
+                  }
+                ?>
+              </select>
+            </div>
 
             <div class="form-group mt-3">
               <label for="event_date">event_date:</label>
@@ -183,7 +200,8 @@ end:
 
         <div class="form-group">
           <label for="content">description:</label>
-          <textarea type="text" name="description" id="content" class="form-control"><?php echo htmlspecialchars($_POST['description'] ?? $currentEvent['description']); ?></textarea>
+          <textarea type="text" name="description" id="content" class="form-control"></textarea>
+          <div id='contenContainer' class='d-none'><?php echo htmlspecialchars($_POST['description'] ?? $currentEvent['description']); ?></div>
         </div>
 
         <?php

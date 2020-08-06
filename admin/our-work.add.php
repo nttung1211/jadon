@@ -31,6 +31,7 @@ $db->alterData(
       events
     SET 
     img_url = ?,
+    category_id = ?,
     title = ?,
     subtitle = ?,
     description = ?,
@@ -38,6 +39,7 @@ $db->alterData(
   ",
   [
     $readUrl,
+    $_POST['category_id'],
     $_POST['title'],
     $_POST['subtitle'],
     $_POST['description'],
@@ -60,19 +62,34 @@ end:
 <script src="../lib/vendor/tinymce/tinymce.min.js"></script>
 <script src="./js/shared/displayUploadImage.js" type="module" defer></script>
 <script src="./js/shared/tinymce.init.js" type="module" defer></script>
-<title>Add Service</title>
+<title>Add an event</title>
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
   <div class="row">
     <div class="col-12 mx-auto mt-4">
-      <a class="btn btn-primary my-2 px-2 px-4" href="services.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
-      <h2 class="my-4">Add a sevice</h2>
+      <a class="btn btn-primary my-2 px-2 px-4" href="our-work.php"><i class="fas fa-chevron-left mr-2"></i>Back</a>
+      <h2 class="my-4">Add an event</h2>
 
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 
         <div class="row">
           <div class="col-lg-6 order-lg-0 order-1">
+            
+            <div class="form-group mt-3">
+              <label for="category_id">category:</label>
+              <select name="category_id" id="category_id" class='custom-select'>
+                <?php
+                  $categories = $db->getData("SELECT * FROM service_categories;");
+                  foreach ($categories as $cate) {
+                    $selected = htmlspecialchars($_POST['category_id'] ?? '') == $cate['id'] ? 'selected' : '';
+                    echo "
+                      <option $selected value='$cate[id]'>$cate[name]</option>
+                    ";
+                  }
+                ?>
+              </select>
+            </div>
 
             <div class="form-group mt-3">
               <label for="event_date">event_date:</label>

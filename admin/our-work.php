@@ -26,6 +26,7 @@ $currentPage = 'our-work.php'; ?>
                 <tr>
                   <th>Thumbnail</th>
                   <th>Title</th>
+                  <th>Category</th>
                   <th>Date</th>
                   <th>Images</th>
                   <th>Comments</th>
@@ -54,7 +55,8 @@ $currentPage = 'our-work.php'; ?>
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to delete ?
+          <p>Deleting this event will also delete likes, comments and images of the event.</p>
+          <p>Are you sure you want to delete ?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

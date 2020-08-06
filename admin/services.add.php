@@ -75,17 +75,20 @@ end:
           <div class="col-lg-6 order-lg-0 order-1">
             <div class="form-group mt-3">
               <label for="category_id">category:</label>
-              <select name="category_id" id="category_id" class='custom-select'>
-                <?php
-                  $categories = $db->getData("SELECT * FROM service_categories;");
-                  foreach ($categories as $cate) {
-                    $selected = htmlspecialchars($_POST['category_id'] ?? '') == $cate['id'] ? 'selected' : '';
-                    echo "
-                      <option $selected value='$cate[id]'>$cate[name]</option>
-                    ";
-                  }
-                ?>
-              </select>
+              <div class='d-flex'>
+                <select name="category_id" id="category_id" class='custom-select'>
+                  <?php
+                    $categories = $db->getData("SELECT * FROM service_categories;");
+                    foreach ($categories as $cate) {
+                      $selected = htmlspecialchars($_POST['category_id'] ?? '') == $cate['id'] ? 'selected' : '';
+                      echo "
+                        <option $selected value='$cate[id]'>$cate[name]</option>
+                      ";
+                    }
+                  ?>
+                </select>
+                <a href='service-categories.php' class='btn btn-primary ml-1'>Edit</a>
+              </div>
             </div>
 
             <div class="form-group mt-3">

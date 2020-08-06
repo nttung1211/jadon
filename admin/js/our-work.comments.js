@@ -13,7 +13,13 @@ const itemContainer = document.querySelector('#item-container');
 itemContainer.addEventListener('click', (e) => {
   if (e.target.matches('#deleteBtn')) {
     document.querySelector('#confirmDelete .btn-danger').addEventListener('click', async () => {
-      await fetchData('cms.delete-data.php', { id: e.target.dataset.id, table: 'event_comments' });
+      await fetchData('cms.alter-data.php', {
+        query: `
+          DELETE FROM event_comments 
+          WHERE id = ? OR parent_comment_id = ?;
+        `,
+        params: JSON.stringify([e.target.dataset.id, e.target.dataset.id])
+      });
       e.target.parentNode.parentNode.remove();
     }, { once: true });
   }

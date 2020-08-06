@@ -1,16 +1,16 @@
-/* body {
+body {
   background-image: linear-gradient(rgba(0, 0, 0, .2), 
   rgba(0, 0, 0, .5)), 
-  url(../../img/cms/admin-login-bg.jpg);
+  url(../../img/cms/admin-login-bg2.jpg);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-} */
+}
 
 #formWrapper {
   margin: 100px auto 0 auto;
   background: white;
-  padding: 50px;
+  padding: 30px 50px;
 } 
 
 #formWrapper .btn-block {
@@ -42,4 +42,10 @@
   border-color: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.forget,
+.form-check-input,
+.form-check-label {
+  line-height: 1.3rem;
 }
