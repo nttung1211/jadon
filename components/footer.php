@@ -1,6 +1,5 @@
 
   <footer class="bg-white">
-
     <div class="container py-5">
       <div class="row py-4">
         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -49,9 +48,9 @@
     <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.871775311311!2d105.80739231502956!3d21.037815992844813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab145bf89bd7%3A0xd94a869b494c04b6!2zMjg1IMSQ4buZaSBD4bqlbiwgVsSpbmggUGjDuiwgQmEgxJDDrG5oLCBIw6AgTuG7mWkgMTAwMDAwLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1596681671514!5m2!1sen!2s" frameborder="0" style="border:0;" allowfullscreen aria-hidden="false" tabindex="0"></iframe>
 
     <!-- Copyrights -->
-    <div class="bg-light py-4">
+    <div class="bg-light py-3">
       <div class="container text-center">
-        <p class="text-muted mb-0">© 2019 Bootstrapious All rights reserved.</p>
+        <p class="text-muted mb-0">© 2019 Jadon All rights reserved.</p>
       </div>
     </div>
   </footer>

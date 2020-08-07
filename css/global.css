@@ -61,3 +61,26 @@ section {
 #map:hover {
   filter: brightness(1);
 }
+
+#goToEmailUs {
+  background-image: linear-gradient(rgba(0, 0, 0, .5), 
+  rgba(0, 0, 0, .2)), 
+  url(../img/cms/admin-login-bg3.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 60px 0;
+  margin-top: 30px;
+}
+
+#goToEmailUs .text {
+  font-size: 4rem;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+#goToEmailUs .btn {
+  font-size: 2rem;
+  padding: 15px 100px;
+  margin: 10px 0;
+}

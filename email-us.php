@@ -18,23 +18,19 @@ $db->alterData("
   INSERT INTO 
     clients
   SET 
-    firstname = ?,
-    lastname = ?,
+    fullname = ?,
     phone = ?,
     email = ?,
     event_location = ?,
     event_date = ?,
-    service_id = ?,
-    additional_info = ?;
+    service_id = ?
 ", [
-  $_POST['firstname'],
-  $_POST['lastname'],
+  $_POST['fullname'],
   $_POST['phone'],
   $_POST['email'],
   $_POST['eventLocation'],
   $_POST['eventDate'],
-  $_POST['service_id'],
-  $_POST['additionalInfo']
+  $_POST['service_id']
 ]);
 
 header('Location: index.php');
@@ -58,32 +54,17 @@ end:
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
       <div class="row" id="formWrapper">
         <div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
-          <div class="form-group">
-            <label for="firstname">Firstname</label>
-            <input type="text" name="firstname" id="firstname" autocomplete="off" class="form-control live-validate" value="<?php echo htmlspecialchars($_POST['firstname'] ?? ''); ?>">
-          </div>
-          <div id='firstname-error'>
-            <?php
-            if (isset($errors['firstname'])) {
-              echo "
-                    <div class='alert alert-danger' role='alert'>
-                      <strong>$errors[firstname]</strong>
-                    </div>
-                  ";
-            }
-            ?>
-          </div>
 
           <div class="form-group">
-            <label for="lastname">Lastname</label>
-            <input type="lastname" name="lastname" id="lastname" class="form-control live-validate" autocomplete="off" value="<?php echo htmlspecialchars($_POST['lastname'] ?? ''); ?>">
+            <label for="fullname">Fullname</label>
+            <input type="fullname" name="fullname" id="fullname" class="form-control live-validate" autocomplete="off" value="<?php echo htmlspecialchars($_POST['fullname'] ?? ''); ?>">
           </div>
-          <div id='lastname-error'>
+          <div id='fullname-error'>
             <?php
-            if (isset($errors['lastname'])) {
+            if (isset($errors['fullname'])) {
               echo "
                 <div class='alert alert-danger' role='alert'>
-                  <strong>$errors[lastname]</strong>
+                  <strong>$errors[fullname]</strong>
                 </div>
               ";
             }
@@ -122,18 +103,18 @@ end:
             ?>
           </div>
 
-          <div class="form-group">
-            <label for="eventLocation">Event location</label>
-            <input type="text" name="eventLocation" id="eventLocation" class="form-control live-validate" autocomplete="off" value="<?php echo htmlspecialchars($_POST['eventLocation'] ?? ''); ?>">
-          </div>
-
         </div>
 
         <div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
 
           <div class="form-group">
+            <label for="eventLocation">Event location</label>
+            <input type="text" name="eventLocation" id="eventLocation" class="form-control" autocomplete="off" value="<?php echo htmlspecialchars($_POST['eventLocation'] ?? ''); ?>">
+          </div>
+
+          <div class="form-group">
             <label for="eventDate">Event date</label>
-            <input type="date" name="eventDate" id="eventDate" class="form-control live-validate" autocomplete="off" value="<?php echo htmlspecialchars($_POST['eventDate'] ?? ''); ?>">
+            <input type="date" name="eventDate" id="eventDate" class="form-control" autocomplete="off" value="<?php echo htmlspecialchars($_POST['eventDate'] ?? ''); ?>">
           </div>
 
           <div class="form-group">
@@ -161,11 +142,6 @@ end:
               </select>
               <div id='selectedService' class="d-none"><?php echo htmlspecialchars($_POST['service_id'] ?? ''); ?></div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label for="additionalInfo">Additional infomation</label>
-            <textarea type="text" name="additionalInfo" id="additionalInfo" class="form-control" rows="4" autocomplete="off"><?php echo htmlspecialchars($_POST['additionalInfo'] ?? ''); ?></textarea>
           </div>
 
         </div>

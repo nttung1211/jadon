@@ -37,9 +37,9 @@ $currentPage = 'our-team.php' ?>
               <div class='card-text text-black-50 text-left long-content'>$description<span class='dots'>$dots</span><span class='more'>$more</span></div>
               $showMoreBtn
               <div class='social-media-container'>
-                <a href='' class='social-media-link'><i class='fab fa-facebook-f'></i></a>
-                <a href='' class='social-media-link'><i class='fab fa-twitter'></i></a>
-                <a href='' class='social-media-link'><i class='fab fa-linkedin-in'></i></a>
+                <a href='$row[facebook]' class='social-media-link'><i class='fab fa-facebook-f'></i></a>
+                <a href='$row[twitter]' class='social-media-link'><i class='fab fa-twitter'></i></a>
+                <a href='$row[linkedin]' class='social-media-link'><i class='fab fa-linkedin-in'></i></a>
               </div>
             </div>
           </div>
@@ -52,4 +52,5 @@ $currentPage = 'our-team.php' ?>
 </div>
 
 
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>

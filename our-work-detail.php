@@ -136,4 +136,5 @@ $event = $events[0];
   <div class='modal-container'></div>
 </main>
 
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>

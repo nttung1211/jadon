@@ -29,9 +29,6 @@
               ?>
             </div>
           </li>
-          <li class="nav-item px-2 <?php echo $currentPage === 'catery.php' ? 'active' : '' ?>">
-            <a class="nav-link" href="catery.php">Catering</a>
-          </li>
           <li class="nav-item px-2 dropdown <?php echo $currentPage === 'our-work.php' ? 'active' : '' ?>">
             <a class="nav-link dropdown-toggle" href="our-work.php">Our work</a>
             <div class="dropdown-menu">

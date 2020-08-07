@@ -17,7 +17,14 @@ $currentPage = 'our-work.php' ?>
   if ($rows !== 0) {
     foreach ($rows as $row) {
       $imgUrl = substr($row['img_url'], 1);
-      $shortSubtitle = strlen($row['subtitle']) > 70 ? substr($row['subtitle'], 0, 68) . '...' : $row['subtitle'];
+      
+      if (strlen($row['subtitle']) > 70) {
+        $shortSubtitle = substr($row['subtitle'], 0, 68);
+        $shortSubtitle = substr($shortSubtitle, 0, strrpos($shortSubtitle, ' ')) . '...';
+      } else {
+        $shortSubtitle = $row['subtitle'];
+      }
+
       $numberOfLike = $db->getData("SELECT COUNT(*) AS number_of_like FROM event_likes WHERE event_id = ?;", [$row['id']])[0]['number_of_like'];
       $numberOfcomment = $db->getData("SELECT COUNT(*) AS number_of_comment FROM event_comments WHERE event_id = ?;", [$row['id']])[0]['number_of_comment'];  
 
@@ -51,4 +58,5 @@ $currentPage = 'our-work.php' ?>
   </div>
 </div>
 
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>

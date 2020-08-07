@@ -5,7 +5,6 @@
   --text-pri: #ccc;
 }
 
-
 a, a:hover {
   text-decoration: none;
 }
@@ -195,8 +194,25 @@ label {
 }
 
 #table tr td:last-child {
-  min-width: 142px;
-  max-width: 142px;
+  min-width: 131px;
+  max-width: 131px;
+}
+
+#table tr td:last-child .fa-check-circle {
+  color: green;
+}
+
+#table tr td:last-child .fa-check-circle,
+#table tr td:last-child .fa-circle {
+  font-size: 1.5rem;
+  display: block;
+  cursor: pointer;
+}
+
+.action-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 #table .date {

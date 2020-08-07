@@ -6,7 +6,7 @@ USE jadon_db;
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 06, 2020 at 12:01 PM
+-- Generation Time: Aug 07, 2020 at 05:18 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -33,16 +33,23 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(100) DEFAULT NULL,
-  `last_name` varchar(100) DEFAULT NULL,
+  `fullname` varchar(100) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) DEFAULT NULL,
-  `interested_service` varchar(100) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
   `event_date` date DEFAULT NULL,
   `event_location` varchar(100) DEFAULT NULL,
   `submitted_at` datetime DEFAULT current_timestamp(),
-  `additional_info` text DEFAULT NULL
+  `status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`id`, `fullname`, `email`, `phone`, `service_id`, `event_date`, `event_location`, `submitted_at`, `status`) VALUES
+(4, 'Nguyen Tung', 'tung@gmail.com', '0934234324', 7, '2020-08-08', 'hanoi', '2020-08-07 12:52:56', 1),
+(5, 'Ngo Thi Mai', 'mai@gmail.com', '09843545', 12, '2020-07-05', 'tpHCM', '2020-08-07 15:55:06', 0);
 
 -- --------------------------------------------------------
 
@@ -94,15 +101,6 @@ CREATE TABLE `event_comments` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `event_comments`
---
-
-INSERT INTO `event_comments` (`id`, `parent_comment_id`, `comment_text`, `user_id`, `event_id`, `created_at`) VALUES
-(102, NULL, 'good', 3, 8, '2020-08-06 16:26:59'),
-(103, 102, 'not really', 3, 8, '2020-08-06 16:27:05'),
-(106, 102, 'Reply to @nttung: con ga nay', 3, 8, '2020-08-06 16:56:28');
-
 -- --------------------------------------------------------
 
 --
@@ -137,13 +135,6 @@ CREATE TABLE `event_likes` (
   `event_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `event_likes`
---
-
-INSERT INTO `event_likes` (`id`, `user_id`, `event_id`, `created_at`) VALUES
-(69, 3, 8, '2020-08-06 16:58:37');
 
 -- --------------------------------------------------------
 
@@ -220,7 +211,7 @@ CREATE TABLE `managers` (
 
 INSERT INTO `managers` (`id`, `fullname`, `username`, `email`, `password`, `level`, `img_url`, `last_activity_time`, `created_at`) VALUES
 (24, 'Nguyen Thanh Hung', 'nthung', 'nthung@gmail.com', '$2y$10$l6SqsyVm1zFlH6JG/hqtwunR9Bkt5WLiyj94UEEDqx5v3AATGQeaq', 'admin', '../img/managers/blue.5f1c3089c5c5f.png', '2020-07-17 21:44:45', '2020-07-09 01:02:49'),
-(25, 'Nguyen Thanh Tung', 'admin', 'nttung@gmail.com', '$2y$10$W3DCLbnKp8.Qsi8xVS45Du65BRbJ6Ah.a.rt7zomA6hXDRt7I33Le', 'super-admin', '../img/managers/code.5f10387bd26b3.jpg', '2020-08-06 16:59:01', '2020-07-09 12:25:20'),
+(25, 'Nguyen Thanh Tung', 'admin', 'nttung@gmail.com', '$2y$10$W3DCLbnKp8.Qsi8xVS45Du65BRbJ6Ah.a.rt7zomA6hXDRt7I33Le', 'super-admin', '../img/managers/code.5f10387bd26b3.jpg', '2020-08-07 22:18:38', '2020-07-09 12:25:20'),
 (29, 'Ngo Thi Mai', 'ntmai', 'ntmai@gmail.com', '$2y$10$SPNjlWrxQKZ1Jz0VYczaNO7sTPE2IUobnsU9h8r0.h0l21KDSuQem', 'manager', '../img/managers/gal-galdot.5f1039e1a8358.jpg', '2020-08-04 22:48:57', '2020-07-11 02:16:52');
 
 -- --------------------------------------------------------
@@ -297,7 +288,7 @@ CREATE TABLE `team_members` (
 --
 
 INSERT INTO `team_members` (`id`, `img_url`, `fullname`, `role`, `description`, `facebook`, `twitter`, `linkedin`, `created_at`) VALUES
-(7, '../img/our-team/code.5f1ce5e7bf44e.jpg', 'Nguyen Thanh Tung', 'Editor', 'Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'facebook.com/nthung', 'twitter.com/nthung', 'linkedin.com/nthung', '2020-07-25 22:48:05'),
+(7, '../img/our-team/code.5f1ce5e7bf44e.jpg', 'Nguyen Thanh Tung', 'Editor', 'Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'https://www.facebook.com/nttung1211/', 'twitter.com/nthung', 'linkedin.com/nthung', '2020-07-25 22:48:05'),
 (10, '../img/our-team/blue.5f24e3aa7ad5c.png', ' Le Quang Huy', 'Designer', 'Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 'facebook.com/ntmai', 'twitter.com/ntmai', 'linkedin.com/ntmai', '2020-07-26 09:12:53'),
 (11, '../img/our-team/wall.5f1ce6bf8b501.jpg', 'Vuong Huy Truong', 'Editor', 'Lorem Ipsum is simply text of the printing and typesetting industry. Lorem Ipsum has been awsome.', 'facebook.com/nthung', 'twitter.com/nthung', 'linkedin.com/nthung', '2020-07-26 09:13:19'),
 (12, '../img/our-team/devices.5f24e3b311be2.jpg', 'Vu Duy Long', 'Designer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, deserunt architecto sint dolorem, aspernatur laboriosam labore recusandae temporibus atque vero magni voluptate quidem necessitatibus, vitae minima quasi. Eos, magni debitis.', 'facebook.com/naduc', 'twitter.com/naduc', 'linkedin.com/naduc', '2020-08-01 10:20:00');
@@ -322,9 +313,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `img_url`, `username`, `email`, `password`, `created_at`) VALUES
-(3, './img/users/devices.5f296b4c9ae41.jpg', 'nttung', 'nttung@gmail.com', '$2y$10$tZuIADNliBgmSWc/WJvykODT4dwJh3lcF9HP2guCd18almhKwxY0G', '2020-08-04 16:55:35'),
-(4, './img/users/gal-galdot.5f2977d746149.jpg', 'ntmai', 'ntmai19@gmail.com', '$2y$10$mNFdhQSE9phkrBe06MQNneMtx.o/cpS.pSiA9UWzQI6txNkyMJWeq', '2020-08-04 17:07:53'),
-(5, './img/users/wall.5f297dfa4545a.jpg', 'nthung', 'nthung@gmail.com', '$2y$10$8rYc2nHkKMDXYYuL2Cogx.vjIeSpGxgiA09TS9EDeSz94DzSfhxSm', '2020-08-04 17:11:43');
+(6, './img/users/blue.5f2c062a28f03.png', 'nttung', 'nttung@gmail.com', '$2y$10$cYnYiw9gDKmcagRkzYm5FeEREsod9BemCbfxVWlFSK99cNqHkJCMO', '2020-08-06 20:31:22'),
+(7, './img/users/gal-galdot.5f2c072f9a8d9.jpg', 'ntmai', 'ntmai@gmail.com', '$2y$10$OLG8dIB9Ovc5rhHXuC7eXeZASW0H9eE5Kg4hHH9U4reec2LcD6R1e', '2020-08-06 20:35:43'),
+(8, './img/users/wall.5f2c0d00f00a8.jpg', 'nthung', 'nthung@gmail.com', '$2y$10$e5UUF056vBmbIgDCcgR2Ee5JRamiJUKbOPFzk3SlQJhaZ6.ftv.ry', '2020-08-06 21:00:33');
+
+--
+-- Triggers `users`
+--
+DELIMITER $$
+CREATE TRIGGER `TG_delete_user` BEFORE DELETE ON `users` FOR EACH ROW BEGIN
+	DELETE FROM event_likes WHERE user_id = OLD.id;
+    DELETE FROM event_comments WHERE user_id = OLD.id;
+END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -418,7 +420,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `events`
@@ -430,7 +432,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `event_comments`
 --
 ALTER TABLE `event_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `event_images`
@@ -442,7 +444,7 @@ ALTER TABLE `event_images`
 -- AUTO_INCREMENT for table `event_likes`
 --
 ALTER TABLE `event_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `home_introduction`
@@ -484,7 +486,7 @@ ALTER TABLE `team_members`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

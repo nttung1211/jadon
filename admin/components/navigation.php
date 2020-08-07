@@ -15,7 +15,6 @@
               </ul>
               <li class="list-group-item <?php echo $currentPage === 'services.php' ? 'active' : '' ?>"><a href="services.php"><i class="fas fa-cogs"></i>Services</a></li>
               <li class="list-group-item <?php echo $currentPage === 'our-work.php' ? 'active' : '' ?>"><a href="our-work.php"><i class="fas fa-images"></i>Our work</a></li>
-              <li class="list-group-item <?php echo $currentPage === 'catering.php' ? 'active' : '' ?>"><a href="catering.php"><i class="fas fa-utensils"></i>Catering</a></li>
               <li class="list-group-item <?php echo $currentPage === 'our-team.php' ? 'active' : '' ?>"><a href="our-team.php"><i class="fas fa-users"></i>Our Team</a></li>
               <li class="list-group-item <?php echo $currentPage === 'users.php' ? 'active' : '' ?>"><a href="users.php"><i class="fas fa-user"></i>Users</a></li>
               <li class="list-group-item <?php echo $currentPage === 'email-us.php' ? 'active' : '' ?>"><a href="email-us.php"><i class="fas fa-envelope-open-text"></i>Email-us</a></li>
@@ -29,7 +28,7 @@
     <div class="main">
       <nav class="navbar navbar-light bg-light shadow-sm">
         <div class="container">
-          <i class="fas fa-chevron-right side-bar-toggler"></i>
+          <i class="fas fa-bars side-bar-toggler"></i>
 
           <div class="navbar-collapse justify-content-end d-flex">
             <ul class="navbar-nav">

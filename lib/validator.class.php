@@ -206,11 +206,7 @@ class UserValidator extends Validator {
 
 class ClientValidator extends Validator {
   protected $fields = [
-    'firstname' => [
-      'regex' => '/^[A-Za-z ]{1,50}$/',
-      'message' => 'firstname must be alphabetic (a-z or A-Z).'
-    ], 
-    'lastname' => [
+    'fullname' => [
       'regex' => '/^[A-Za-z ]{1,50}$/',
       'message' => 'lastname must be alphabetic (a-z or A-Z).'
     ], 

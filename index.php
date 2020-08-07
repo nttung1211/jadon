@@ -89,6 +89,7 @@ if ($rows !== 0) {
 ?>
 </main>
 
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>
 
 

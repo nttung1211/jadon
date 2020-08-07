@@ -90,7 +90,5 @@ if ($relatedServices !== 0 && count($relatedServices) > 1) {
 }
 ?>
 
-
-
-
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>

@@ -18,7 +18,13 @@ $currentPage = 'services.php' ?>
   if ($rows !== 0) {
     foreach ($rows as $row) {
       $imgUrl = substr($row['img_url'], 1);
-      $shortSubtitle = strlen($row['subtitle']) > 140 ? substr($row['subtitle'], 0, 137) . '...' : $row['subtitle'];
+
+      if (strlen($row['subtitle']) > 140) {
+        $shortSubtitle = substr($row['subtitle'], 0, 137);
+        $shortSubtitle = substr($shortSubtitle, 0, strrpos($shortSubtitle, ' ')) . '...';
+      } else {
+        $shortSubtitle = $row['subtitle'];
+      }
 
       echo "
         <div class='col-sm-10 col-md-6 mx-auto mb-4'>
@@ -39,4 +45,5 @@ $currentPage = 'services.php' ?>
 </div>
 
 
+<?php require 'components/go-to-join.php'; ?>
 <?php require 'components/footer.php'; ?>

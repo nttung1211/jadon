@@ -7,10 +7,11 @@ main {
   background-image: linear-gradient(rgba(0, 0, 0, 0), 
   rgba(0, 0, 0, 0)), 
   url(../img/cms/admin-login-bg2.jpg);
-  height: calc(100vh - 59px);
+  min-height: calc(100vh - 59px);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  padding-bottom: 10px;
 }
 
 #formWrapper {

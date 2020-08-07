@@ -24,8 +24,7 @@ $currentPage = 'email-us.php'; ?>
             <table id="table" style="width:100%" class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
+                  <th>Fullname</th>
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Service</th>
