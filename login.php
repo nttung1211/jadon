@@ -3,6 +3,10 @@ $currentPage = 'login.php' ?>
 
 <?php
 
+if (isset($_SESSION['user_loggedIn'])) { 
+  header('location: index.php');
+}
+
 if (isset($_POST['submit'])) {
 
   require 'lib/validator.class.php';
@@ -24,8 +28,7 @@ if (isset($_POST['submit'])) {
           setcookie('user_loggedIn', serialize($user), time() + 86400, '/');
         }
         
-        $url = isset($_GET['prev']) ? urldecode($_GET['prev']) : 'index.php';
-        header('Location: ' . $url);
+        header('Location: ' . urldecode($_GET['prev']));
         exit();
       }
     }
@@ -46,7 +49,7 @@ if (isset($_POST['submit'])) {
         <?php
         if (isset($_SESSION['success'])) {
           echo "
-            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <div class='alert alert-success alert-dismissible fade show' role='alert'>
               <strong>$_SESSION[success]</strong>
               <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
@@ -60,7 +63,7 @@ if (isset($_POST['submit'])) {
   
         <h1 class="my-5 text-center display-4">Welcome!</h1>
   
-        <form action="<?php echo $_SERVER['PHP_SELF'] . '?prev=' . $_GET['prev'] ?>" method="post">
+        <form action="<?php echo $_SERVER['PHP_SELF'] . '?prev='; echo $_GET['prev'] ?? 'index.php'; ?>" method="post">
           <div class="form-group">
             <label for="username"></label>
             <i class="fas fa-user"></i>

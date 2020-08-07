@@ -77,6 +77,7 @@ end:
 
 <?php require 'components/header.php'; ?>
 <script src='admin/js/shared/displayUploadImage.js' type="module" defer></script>
+<script src='js/register.live-validate.js' type="module" defer></script>
 <link rel="stylesheet" href="css/register.css">
 <title>Register</title>
 <?php require 'components/navigation.php'; ?>
@@ -171,10 +172,6 @@ end:
 
   </div>
 </main>
-
-
-
-
 
 
 <?php require 'components/footer.php'; ?>

@@ -76,7 +76,7 @@ class ManagerValidator extends Validator {
       'message' => 'password must be 4-20 characters and alphanumeric.'
     ],
     'email' => [
-      'regex' => '/^\w{4,20}@\w{2,20}\.\w{2,20}$/',
+      'regex' => '/^\w+@\w+\.\w+$/',
       'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
     ] 
   ];
@@ -198,8 +198,29 @@ class UserValidator extends Validator {
       'message' => 'Please confirm password'
     ],
     'email' => [
-      'regex' => '/^\w{4,20}@\w{2,20}\.\w{2,20}$/',
+      'regex' => '/^\w+@\w+\.\w+$/',
       'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
     ] 
+  ];
+}
+
+class ClientValidator extends Validator {
+  protected $fields = [
+    'firstname' => [
+      'regex' => '/^[A-Za-z ]{1,50}$/',
+      'message' => 'firstname must be alphabetic (a-z or A-Z).'
+    ], 
+    'lastname' => [
+      'regex' => '/^[A-Za-z ]{1,50}$/',
+      'message' => 'lastname must be alphabetic (a-z or A-Z).'
+    ], 
+    'phone' => [
+      'regex' => '/^[0-9]{8,16}$/',
+      'message' => 'phone must be numeric (8-16 numbers)'
+    ], 
+    'email' => [
+      'regex' => '/^\w+@\w+\.\w+$/',
+      'message' => 'please enter a valid email (e.g., John_Doe@gmail.com)'
+    ]
   ];
 }

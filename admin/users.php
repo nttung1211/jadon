@@ -1,5 +1,7 @@
-<?php include '../lib/db.php'; $currentPage = 'managers.php'; ?>
-<?php include './cms.check-logged-in.php'; ?>
+<?php include '../lib/db.php';
+$currentPage = 'users.php'; ?>
+<?php include 'cms.check-logged-in.php'; ?>
+
 <?php include './components/header.php'; ?>
 
 <!-- dataTable -->
@@ -7,17 +9,16 @@
 <script src="../lib/js/jquery.dataTables.min.js" defer></script>
 <script src="../lib/js/dataTables.bootstrap4.min.js" defer></script>
 
-<script src="./js/managers.js" type="module" defer></script>
-<title>Managers</title>
+<script src="js/users.js" type="module" defer></script>
+
+<title>Introduction</title>
 
 <?php include './components/navigation.php'; ?>
 
 <div class="container">
   <div class="row">
-
     <div class="col-sm-12 mt-4">
-      <?php echo $_SESSION['jadon_loggedIn']['level'] !== 'manager' ? '<a href="managers.add.php" class="btn btn-success">Add an account</a>' : '' ?>
-      
+
       <div class="card rounded shadow-sm border-0 mt-4">
         <div class="card-body p-4 bg-white rounded">
           <div class="table-responsive">
@@ -25,11 +26,9 @@
               <thead>
                 <tr>
                   <th>Image</th>
-                  <th>Fullname</th>
                   <th>Username</th>
                   <th>Email</th>
-                  <th>Level</th>
-                  <th>Status</th>
+                  <th>Join Date</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -54,7 +53,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to delete this account?
+          Delete this user will also delete all likes and comments of the user. Are you sure you want to delete ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

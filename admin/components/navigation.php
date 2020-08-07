@@ -17,8 +17,9 @@
               <li class="list-group-item <?php echo $currentPage === 'our-work.php' ? 'active' : '' ?>"><a href="our-work.php"><i class="fas fa-images"></i>Our work</a></li>
               <li class="list-group-item <?php echo $currentPage === 'catering.php' ? 'active' : '' ?>"><a href="catering.php"><i class="fas fa-utensils"></i>Catering</a></li>
               <li class="list-group-item <?php echo $currentPage === 'our-team.php' ? 'active' : '' ?>"><a href="our-team.php"><i class="fas fa-users"></i>Our Team</a></li>
-              <li class="list-group-item <?php echo $currentPage === 'email-us.php' ? 'active' : '' ?>"><a href="email-us.php"><i class="fas fa-envelope"></i>email us</a></li>
-              <li id="managersBtn" class="list-group-item <?php echo $currentPage === 'managers.php' ? 'active' : '' ?>"><a href="managers.php"><i class="fas fa-users-cog"></i>Managers</a></li>
+              <li class="list-group-item <?php echo $currentPage === 'users.php' ? 'active' : '' ?>"><a href="users.php"><i class="fas fa-user"></i>Users</a></li>
+              <li class="list-group-item <?php echo $currentPage === 'email-us.php' ? 'active' : '' ?>"><a href="email-us.php"><i class="fas fa-envelope-open-text"></i>Email-us</a></li>
+              <li id="managersBtn" class="list-group-item <?php echo $currentPage === 'managers.php' ? 'active' : '' ?>"><a href="managers.php"><i class="fas fa-user-tie"></i>Managers</a></li>
             </ul>
           </div>
         </div>

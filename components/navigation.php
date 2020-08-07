@@ -60,7 +60,7 @@
               <img src="<?php echo $_SESSION['user_loggedIn']['img_url'] ? $_SESSION['user_loggedIn']['img_url'] : 'img/svg/default-user.svg' ?>" alt="profile picture">
               <?php echo $_SESSION['user_loggedIn']['username'] ?>
             </a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item text-secondary" href="logout.php?prev=<?php echo urlencode($_SERVER['REQUEST_URI']) ?>">
                 <i class="fas fa-sign-out-alt px-2"></i>
                 Logout
@@ -74,7 +74,7 @@
           <?php } else { ?>
           <li class="nav-item px-2 dropdown <?php echo $currentPage === 'login.php' ? 'active' : '' ?>">
             <a class="nav-link dropdown-toggle" href="login.php?prev=<?php echo urlencode($_SERVER['REQUEST_URI']) ?>">Login</a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item text-secondary" href="register.php">
                 <i class="fas fa-sign-out-alt px-2"></i>
                 Register

@@ -3,6 +3,16 @@ $currentPage = 'login.php'; ?>
 <?php include './check-logged-in.php'; ?>
 
 <?php
+
+if (!isset($_SESSION['user_loggedIn'])) { 
+  header('location: index.php');
+  exit();
+}
+
+if ($_GET['id'] != $_SESSION['user_loggedIn']['id']) {
+  exit('<h1>You need to authenticate before accessing this page.</h1>');
+}
+
 /* get current data of the manager */
 $rows = $db->getData("SELECT * FROM users WHERE id = ?;", [$_GET['id']]);
 

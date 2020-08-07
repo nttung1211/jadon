@@ -57,7 +57,7 @@ async function renderManagers() {
       const shortEmail = item.email.slice(0, item.email.indexOf('@') + 1) + '...';
       const html = `
         <tr>
-          <td><img src="${item.img_url ? item.img_url : '../img/svg/default-user.svg'}" alt="Image"></td>
+          <td><img class='rounded-img' src="${item.img_url ? item.img_url : '../img/svg/default-user.svg'}" alt="Image"></td>
           <td>${item.fullname}</td>
           <td>${item.username}</td>
           <td><a href="mailto:${item.email}" title="${item.email}" data-toggle="tooltip">${shortEmail}</a></td>

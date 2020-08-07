@@ -74,7 +74,7 @@ label {
 }
 
 #managersBtn a {
-  padding: 20px 20px;
+  padding: 20px 25px;
 }
 
 .main {
@@ -195,13 +195,20 @@ label {
 }
 
 #table tr td:last-child {
-  min-width: 131px;
-  max-width: 131px;
+  min-width: 142px;
+  max-width: 142px;
 }
 
 #table .date {
   font-size: .9rem;
   font-style: italic;
+}
+
+#table .rounded-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* ********************************************* */
