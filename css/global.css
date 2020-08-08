@@ -84,3 +84,9 @@ section {
   padding: 15px 100px;
   margin: 10px 0;
 }
+
+.social-media .fab {
+  font-size: 3rem;
+  margin: 10px 10px 10px 0;
+  filter: drop-shadow(1px 1px 1px rgba(2, 117, 216, .5));
+}
