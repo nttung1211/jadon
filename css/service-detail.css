@@ -23,3 +23,8 @@
 .long-content {
   height: 6rem;
 }
+
+.jumbotron {
+  background-position: center;
+  background-attachment: fixed;
+}

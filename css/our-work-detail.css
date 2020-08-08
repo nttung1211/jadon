@@ -68,10 +68,20 @@ main {
 
 .images-container-wrapper .fa-chevron-left {
   top: 50%;
-  left: 0;;
+  left: 0;
+  display: none;
+}
+
+.images-container-wrapper:hover .fa-chevron-left {
+  display: block;
+}
+
+.images-container-wrapper:hover .fa-chevron-right {
+  display: block;
 }
 
 .images-container-wrapper .fa-chevron-right {
+  display: none;
   top: 50%;
   right: 0;
 }

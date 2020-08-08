@@ -35,7 +35,7 @@ itemContainer.addEventListener('click', (e) => {
 
       /* delete event, images, thumbnail, likes, comments on database */
       await fetchData('cms.delete-data.php', { id: e.target.dataset.id, table: 'events' });
-      e.target.parentNode.parentNode.remove();
+      await renderItems();
     }, { once: true });
   }
 })

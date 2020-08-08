@@ -30,7 +30,8 @@ $currentPage = 'index.php' ?>
           $imgUrl = substr($img['img_url'], 1);
           $active = $i === 0 ? 'active' : '';
           echo "
-            <div class='carousel-item $active' style='background-image: url($imgUrl)'>
+            <div class='carousel-item $active' style='background-image: linear-gradient(rgba(0, 0, 0, .1), 
+            rgba(0, 0, 0, .5)), url($imgUrl)'>
               <div class='carousel-caption d-none d-md-block'>
                 <h2 class='display-4 text-capitalize'>$img[title]</h2>
                 <p class='lead'>$img[caption]</p>

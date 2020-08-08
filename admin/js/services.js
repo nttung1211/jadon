@@ -17,7 +17,7 @@ itemContainer.addEventListener('click', (e) => {
         await fetchData('../lib/delete-file.php', { fileName: e.target.dataset.imgUrl })
       }
       await fetchData('cms.delete-data.php', { id: e.target.dataset.id, table: 'services' });
-      e.target.parentNode.parentNode.remove();
+      await renderItems();
     }, { once: true });
   }
 })

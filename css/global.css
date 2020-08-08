@@ -63,9 +63,9 @@ section {
 }
 
 #goToEmailUs {
-  background-image: linear-gradient(rgba(0, 0, 0, .5), 
-  rgba(0, 0, 0, .2)), 
-  url(../img/cms/admin-login-bg3.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, .3), 
+  rgba(0, 0, 0, .6)), 
+  url(../img/cms/admin-login-bg.jpg);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -90,3 +90,4 @@ section {
   margin: 10px 10px 10px 0;
   filter: drop-shadow(1px 1px 1px rgba(2, 117, 216, .5));
 }
+
